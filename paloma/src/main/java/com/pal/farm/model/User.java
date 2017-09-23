@@ -33,6 +33,6 @@ public class User implements Serializable {
 	private String username;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
-	private List<Chicken> chickens;
+	private List<Animal> animals;
 
 }

@@ -22,8 +22,25 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "CHICKEN")
+@Table(name = "ANIMAL")
 @Inheritance
-public abstract class Animal {
+public abstract class Animal implements Serializable {
 
+	private static final long serialVersionUID = 9108825445592569217L;
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="ID_ANIMAL")
+	private Integer idAnimal;
+
+	@Column(name="TYPE")
+	private String type;
+
+	@Column(name="FRECUENCY")
+	private String frecuency;
+	@ManyToOne
+	private User user;
+	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "animal")
+	private List<Production> productions;
 }

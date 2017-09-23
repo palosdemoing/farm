@@ -38,9 +38,13 @@ public class Production implements Serializable {
 	@Column(name="STATE")
 	private Boolean state;
 
-	@Column(name="PRICE")
-	private Integer price;
+	@Column(name="PRICE_BOUGTH")
+	private Integer priceBougth;
+
+	@Column(name="PRICE_SOLD")
+	private String priceSold;
+	
 	
 	@ManyToOne
-	private Chicken chicken;
+	private Animal animal;
 }

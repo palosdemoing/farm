@@ -9,6 +9,6 @@ import com.pal.farm.model.Chicken;
 
 public interface ChickenService extends CRUD<Chicken, Integer> {
 	
-	public List<Animal> findByTypeAndFrecuency(String type, String frecuency);
+	public List<Chicken> findByTypeAndFrecuency(String type, String frecuency);
 
 }

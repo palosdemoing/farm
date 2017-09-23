@@ -8,6 +8,6 @@ import com.pal.farm.model.Cow;
 
 public interface CowService extends CRUD<Cow, Integer> {
 	
-	public List<Animal> findByTypeAndFrecuency(String type, String frecuency);
+	public List<Cow> findByTypeAndFrecuency(String type, String frecuency);
 
 }

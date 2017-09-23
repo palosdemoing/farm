@@ -1,12 +1,17 @@
 package com.pal.farm.dao;
 
 
-//import org.springframework.stereotype.Repository;
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.pal.farm.model.Chicken;
+
 @Transactional
-//@Repository
+@Repository
 public interface ChickenDAO extends AnimalDAO {
-	
+
+	public List<Chicken> findOneByTypeAndFrecuency(String type, String frecuency);
 
 }

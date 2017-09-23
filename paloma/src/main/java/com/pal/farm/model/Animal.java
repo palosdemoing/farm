@@ -32,7 +32,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-
 @Data
 @DiscriminatorColumn(name = "ANIMAL_TYPE", discriminatorType=DiscriminatorType.STRING)
 @Entity
@@ -42,20 +41,11 @@ import lombok.NoArgsConstructor;
 public abstract class Animal implements Serializable {
 
 	private static final long serialVersionUID = 9108825445592569217L;
-
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.AUTO)
-//	
-//	@TableGenerator(name = "ANIMAL_GEN", table = "ID_GEN", pkColumnName = "GEN_NAME", valueColumnName = "GEN_VAL", allocationSize = 1)
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.TABLE, generator = "ANIMAL_GEN")
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_ANIMAL", updatable = false, nullable = false)
-	protected Long id;
-//	@Column(name="ID_ANIMAL")
-//	private Integer idAnimal;
+	protected Integer idAnimal;
 
 	@Column(name="TYPE")
 	private String type;

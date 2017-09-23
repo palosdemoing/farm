@@ -6,12 +6,11 @@ import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import com.pal.farm.model.Animal;
+import com.pal.farm.model.Chicken;
 
 
 @NoRepositoryBean
 public interface AnimalDAO extends PagingAndSortingRepository<Animal, Integer>  {
-	
-	public List<Animal> findOneByTypeAndFrecuency(String type, String frecuency);
 
 }
 

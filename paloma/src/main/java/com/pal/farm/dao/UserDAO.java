@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.pal.farm.model.User;
 
 @Repository
-public interface UserDao extends PagingAndSortingRepository<User, Integer> {
+public interface UserDAO extends PagingAndSortingRepository<User, Integer> {
 	
 	public User findUserByUsername(String username) throws NotFound;
 

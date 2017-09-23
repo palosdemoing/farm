@@ -17,12 +17,14 @@ import javax.persistence.Table;
 
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-
+@NoArgsConstructor
 @Data
 @Entity
 @Table(name = "PRODUCTION")
 public class Production implements Serializable {
+
 
 	private static final long serialVersionUID = 1786920272455080095L;
 
@@ -39,12 +41,23 @@ public class Production implements Serializable {
 	private Boolean state;
 
 	@Column(name="PRICE_BOUGTH")
-	private Integer priceBougth;
+	private Double priceBougth;
 
 	@Column(name="PRICE_SOLD")
-	private String priceSold;
+	private Double priceSold;
 	
 	
 	@ManyToOne
 	private Animal animal;
+	
+
+	
+	public Production(Date productionDate, Boolean state, Double priceBought, Double priceSold) {
+		
+		this.setProductionDate(productionDate);
+		this.setState(state);
+		this.setPriceBougth(priceBought);
+		this.setPriceSold(priceSold);
+		
+	}
 }

@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.pal.farm.dao.ProductionDao;
+import com.pal.farm.dao.ProductionDAO;
 import com.pal.farm.model.Production;
 
 @Service
 public class ProductionServiceImpl implements ProductionService {
 
 	@Autowired
-	private ProductionDao dao;
+	private ProductionDAO dao;
 
 	@Override
 	public Production create(Production t) {

@@ -7,14 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.pal.farm.dao.UserDao;
+import com.pal.farm.dao.UserDAO;
 import com.pal.farm.model.User;
 
 @Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
-	private UserDao dao;
+	private UserDAO dao;
 
 	@Override
 	public User create(User t) {

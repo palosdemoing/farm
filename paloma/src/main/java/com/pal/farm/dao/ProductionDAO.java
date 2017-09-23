@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 import com.pal.farm.model.Production;
 
 @Repository
-public interface ProductionDao extends PagingAndSortingRepository<Production, Integer> {
+public interface ProductionDAO extends PagingAndSortingRepository<Production, Integer> {
 	
-	public Optional<Production> findOneByProductionDateAndChicken(String date, String chicken);
+	public Optional<Production> findOneByProductionDateAndAnimal(String date, String animal);
 
 }

@@ -1,29 +1,35 @@
 package com.pal.farm.service;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.pal.farm.dao.AnimalDAO;
+//import com.pal.farm.dao.AnimalDAO;
 import com.pal.farm.dao.ChickenDAO;
 import com.pal.farm.model.Animal;
 import com.pal.farm.model.Chicken;
 
 @Service
 public class ChickenServiceImpl implements ChickenService {
-//
+
 //	@Autowired
 //	private AnimalDAO animalDao;
+	
 	@Autowired
 	private ChickenDAO chickenDao;
 
 	@Override
 	public Chicken create(Chicken t) {
-		return chickenDao.save(t);
+		if ( !t.getIdAnimal() instanceof Integer) {
+			return chickenDao.save(t);
+		}
 	}
 
 	@Override
@@ -33,14 +39,21 @@ public class ChickenServiceImpl implements ChickenService {
 	}
 
 	@Override
-	public Chicken update(Chicken t) {
+	public Chicken update(Chicken t) throws NotFound {
+		if ( chickenDao.findOne(t.getIdAnimal()) instanceof Chicken ) {
+			throw new NotFound();
+		}
 		return chickenDao.save(t);
 	}
 
 	@Override
 	public List<Chicken> getAll(Pageable pageable) {
 		final List<Chicken> chickens = new ArrayList<>();
-		chickenDao.findAll(pageable).forEach(c -> chickens.add( (Chicken) c ));
+		chickenDao.findAll(pageable).forEach(c -> {
+			if (c instanceof Chicken) {
+				chickens.add( (Chicken) c );
+			}
+		});
 		return chickens;
 	}
 
@@ -50,8 +63,8 @@ public class ChickenServiceImpl implements ChickenService {
 	}
 
 	@Override
-	public List<Animal> findByTypeAndFrecuency(String type, String frecuency) {
+	public List<Chicken> findByTypeAndFrecuency(String type, String frecuency) {
 		return chickenDao.findOneByTypeAndFrecuency(type, frecuency);		
 	}
-	
+
 }

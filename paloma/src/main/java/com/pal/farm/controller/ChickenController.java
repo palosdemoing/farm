@@ -8,12 +8,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pal.farm.model.Animal;
 import com.pal.farm.model.Chicken;
 import com.pal.farm.service.ChickenService;
 
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @RestController
@@ -27,7 +30,7 @@ public class ChickenController implements CRUD<Chicken, Integer> {
 	@RequestMapping(method = RequestMethod.POST)
 	public Chicken create(@RequestBody Chicken t) {
 		log.info("Intentando crear un objeto Chicken");
-		return chickenService.create(t);
+		return (Chicken) chickenService.create(t);
 	}
 
 	@Override
@@ -41,7 +44,7 @@ public class ChickenController implements CRUD<Chicken, Integer> {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public Chicken update(@RequestBody Chicken t) {
 		log.info("Vamos a actualizar un objeto Chicken");
-		return chickenService.update(t);
+		return (Chicken) chickenService.update(t);
 	}
 
 	@Override
@@ -55,7 +58,14 @@ public class ChickenController implements CRUD<Chicken, Integer> {
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Chicken findById(@PathVariable("id") Integer id) {
 		log.info("Vamos a recuperar un objeto Chicken con id " + id);
-		return chickenService.findById(id);
+		return (Chicken) chickenService.findById(id);
+	}
+
+//	@Override
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public List<Chicken> findByTypeAndFrecuency(@RequestParam("type") String type, @RequestParam("frecuency") String frecuency) {
+		log.info("Vamos a recuperar un objeto Chicken con id " + type);
+		return chickenService.findByTypeAndFrecuency(type, frecuency);
 	}
  
 }

@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.pal.farm.model.Chicken;
 import com.pal.farm.model.Cow;
 import com.pal.farm.service.CowService;
 
@@ -58,4 +60,11 @@ public class CowController implements CRUD<Cow, Integer> {
 		return cowService.findById(id);
 	}
  
+//	@Override
+	@RequestMapping(value = "/search", method = RequestMethod.GET)
+	public List<Cow> findByTypeAndFrecuency(@RequestParam("type") String type, @RequestParam("frecuency") String frecuency) {
+		log.info("Vamos a recuperar un objeto Cow con id " + type);
+		return cowService.findByTypeAndFrecuency(type, frecuency);
+	}
+	
 }

@@ -2,6 +2,8 @@ package com.pal.farm.controller;
 
 import java.util.List;
 
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,37 +27,45 @@ public class UserController implements CRUD<User, Integer> {
 
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
-	public User create(@RequestBody User t) {
-		log.info("Intentando crear un usuario");
+	public User create(@RequestBody User t) throws NotFound {
 		return userService.create(t);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody User t) {
-		log.info("Vamos a borrar");
+	public void delete(@RequestBody User t) throws CannotProceed {
 		userService.delete(t);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public User update(@RequestBody User t) {
-		log.info("Vamos a actualizar");
+	public User update(@RequestBody User t) throws CannotProceed, NotFound {
 		return userService.update(t);
 	}
 
 	@Override
 	@RequestMapping(method = RequestMethod.GET) 
-	public List<User> getAll(Pageable pageable){
-		log.info("Intento paginación ");
+	public List<User> getAll(Pageable pageable) throws NotFound {
 		return userService.getAll(pageable);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public User findById(@PathVariable("id") Integer id) {
-		log.info("Vamos a recuperar un usuario con id " + id);
+	public User findById(@PathVariable("id") Integer id) throws NotFound {
 		return userService.findById(id);
+	}
+
+	
+	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
+	public User findByUsername(@PathVariable("name") String name) throws NotFound {
+		log.info("Vamos a recuperar un usuario con id " + name);
+		return userService.findByUsername(name);
+	}
+	
+	@RequestMapping(value = "/earn/{name}", method = RequestMethod.GET)
+	public List<User> earnsByUser(@PathVariable("name") Integer name) throws NotFound {
+		log.info("Vamos a recuperar un usuario con id " + name);
+		return userService.earnsByUser(name);
 	}
 
 }

@@ -2,6 +2,8 @@ package com.pal.farm.controller;
 
 import java.util.List;
 
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,37 +27,39 @@ public class ProductionController implements CRUD<Production, Integer> {
 
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
-	public Production create(@RequestBody Production t) {
+	public Production create(@RequestBody Production t) throws NotFound {
 		log.info("Intentando crear un Production");
 		return productionService.create(t);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody Production t) {
+	public void delete(@RequestBody Production t) throws CannotProceed {
 		log.info("Vamos a borrar Production");
 		productionService.delete(t);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public Production update(@RequestBody Production t) {
+	public Production update(@RequestBody Production t) throws CannotProceed, NotFound {
 		log.info("Vamos a actualizar Production");
 		return productionService.update(t);
 	}
 
 	@Override
 	@RequestMapping(method = RequestMethod.GET) 
-	public List<Production> getAll(Pageable pageable){
+	public List<Production> getAll(Pageable pageable) throws NotFound{
 		log.info("Intento paginación ");
 		return productionService.getAll(pageable);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public Production findById(@PathVariable("id") Integer id) {
+	public Production findById(@PathVariable("id") Integer id) throws NotFound {
 		log.info("Vamos a recuperar un Production con id " + id);
 		return productionService.findById(id);
 	}
 
+//	findOneByProductionDateAndAnimal
+	
 }

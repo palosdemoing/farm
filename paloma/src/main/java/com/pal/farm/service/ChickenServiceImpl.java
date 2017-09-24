@@ -1,70 +1,70 @@
 package com.pal.farm.service;
 
-import java.io.Serializable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-//import com.pal.farm.dao.AnimalDAO;
 import com.pal.farm.dao.ChickenDAO;
-import com.pal.farm.model.Animal;
+import com.pal.farm.dto.ChickenDTO;
+import com.pal.farm.mappers.ChickenMapperService;
 import com.pal.farm.model.Chicken;
+
 
 @Service
 public class ChickenServiceImpl implements ChickenService {
 
-//	@Autowired
-//	private AnimalDAO animalDao;
+	@Autowired
+	private ChickenMapperService chickenMapper;
 	
 	@Autowired
 	private ChickenDAO chickenDao;
 
 	@Override
-	public Chicken create(Chicken t) {
-		if ( !t.getIdAnimal() instanceof Integer) {
-			return chickenDao.save(t);
-		}
+	public ChickenDTO create(ChickenDTO t) throws NotFound {
+		return chickenMapper.map(chickenDao.save( chickenMapper.map(t) ));	
 	}
 
 	@Override
-	public void delete(Chicken t) {
-		chickenDao.delete(t);
-//		animalDao.delete(t);
+	public void delete(ChickenDTO t) {
+		chickenDao.delete( chickenMapper.map(t) );  // error 401
 	}
 
 	@Override
-	public Chicken update(Chicken t) throws NotFound {
-		if ( chickenDao.findOne(t.getIdAnimal()) instanceof Chicken ) {
+	public ChickenDTO update(ChickenDTO t) throws NotFound {
+		final Chicken c = chickenMapper.map(t);
+		if ( chickenDao.findOne(c.getIdAnimal()) instanceof Chicken ) {
 			throw new NotFound();
 		}
-		return chickenDao.save(t);
+		return chickenMapper.map(chickenDao.save(c));
 	}
 
 	@Override
-	public List<Chicken> getAll(Pageable pageable) {
-		final List<Chicken> chickens = new ArrayList<>();
+	public List<ChickenDTO> getAll(Pageable pageable) {
+		final List<ChickenDTO> chickens = new ArrayList<>();
 		chickenDao.findAll(pageable).forEach(c -> {
 			if (c instanceof Chicken) {
-				chickens.add( (Chicken) c );
+				chickens.add( chickenMapper.map((Chicken) c) );
 			}
 		});
 		return chickens;
 	}
 
 	@Override
-	public Chicken findById(Integer id) {
-		return (Chicken) chickenDao.findOne(id);
+	public ChickenDTO findById(Integer id) {
+		return chickenMapper.map( (Chicken) chickenDao.findOne(id) );
 	}
 
 	@Override
-	public List<Chicken> findByTypeAndFrecuency(String type, String frecuency) {
-		return chickenDao.findOneByTypeAndFrecuency(type, frecuency);		
+	public List<ChickenDTO> findByTypeAndFrecuency(String type, String frecuency) {
+		final List<ChickenDTO> chickens = new ArrayList<>();
+		chickenDao.findOneByTypeAndFrecuency(type, frecuency).forEach(c -> chickens.add( chickenMapper.map(c) ));
+		return chickens;
 	}
 
 }

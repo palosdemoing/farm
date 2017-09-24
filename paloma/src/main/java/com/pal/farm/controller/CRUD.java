@@ -14,7 +14,7 @@ public interface CRUD<T, ID extends Serializable> {
 
 	void delete(T t) throws CannotProceed;
 
-	T update(T t) throws CannotProceed;
+	T update(T t) throws CannotProceed, NotFound;
 
 	List<T> getAll(Pageable pageable) throws NotFound;
 

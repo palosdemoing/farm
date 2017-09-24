@@ -36,8 +36,8 @@ public class CowController implements CRUD<CowDTO, Integer> {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody CowDTO t) throws CannotProceed {
-		cowService.delete(t);
+	public void delete(@RequestBody CowDTO t, @PathParam("id") Integer id) throws CannotProceed {
+		cowService.delete(t, id);
 	}
 
 	@Override

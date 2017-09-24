@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pal.farm.dao.UserDAO;
+import com.pal.farm.dto.UserDTO;
+import com.pal.farm.mappers.UserMapperService;
 import com.pal.farm.model.User;
 
 
@@ -17,38 +19,45 @@ import com.pal.farm.model.User;
 public class UserServiceImpl implements UserService {
 
 	@Autowired
+	private UserMapperService userMapper;
+
+	@Autowired
 	private UserDAO userDao;
 
 	@Override
-	public User create(User t) {
-		return userDao.save(t);
+	public UserDTO create(UserDTO t) {
+		return userMapper.map( userDao.save( userMapper.map(t) ) );
 	}
 
 	@Override
-	public void delete(User t) {
-		userDao.delete(t);
+	public void delete(UserDTO t, Integer id) {
+		final User u = userMapper.map(t);
+		u.setIdUser(id);
+		userDao.delete(u);
 	}
 
 	@Override
-	public User update(User t, Integer id) {
-		return userDao.save(t);
+	public UserDTO update(UserDTO t, Integer id) {
+		final User u = userMapper.map(t);
+		u.setIdUser(id);
+		return userMapper.map( userDao.save(u) );
 	}
 
 	@Override
-	public List<User> getAll(Pageable pageable) {
-		final List<User> users = new ArrayList<>();
-		userDao.findAll(pageable).forEach(u -> users.add(u));
+	public List<UserDTO> getAll(Pageable pageable) {
+		final List<UserDTO> users = new ArrayList<>();
+		userDao.findAll(pageable).forEach(u -> users.add( userMapper.map(u) ));
 		return users;
 	}
 
 	@Override
-	public User findById(Integer id) {
-		return userDao.findOne(id);
+	public UserDTO findById(Integer id) {
+		return userMapper.map( userDao.findOne(id) );
 	}
 
 	@Override
-	public User findByUsername(String name) throws NotFound {
-		return userDao.findUserByUsername(name);
+	public UserDTO findByUsername(String name) throws NotFound {
+		return userMapper.map( userDao.findUserByUsername(name) );
 	}
 
 	@Override

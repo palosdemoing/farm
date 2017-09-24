@@ -46,8 +46,8 @@ public class ChickenController implements CRUD<ChickenDTO, Integer> {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody ChickenDTO t) throws CannotProceed {
-		chickenService.delete(t);
+	public void delete(@RequestBody ChickenDTO t, @PathParam("id") Integer id) throws CannotProceed {
+		chickenService.delete(t, id);
 		// directamente el 401????
 	}
 

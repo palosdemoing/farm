@@ -2,6 +2,8 @@ package com.pal.farm.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +53,8 @@ public class ChickenController implements CRUD<ChickenDTO, Integer> {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ChickenDTO update(@RequestBody ChickenDTO t) throws CannotProceed, NotFound {
-		return (ChickenDTO) chickenService.update(t);
+	public ChickenDTO update(@RequestBody ChickenDTO t, @PathParam("id") Integer id) throws CannotProceed, NotFound {
+		return (ChickenDTO) chickenService.update(t, id);
 	}
 
 	@Override

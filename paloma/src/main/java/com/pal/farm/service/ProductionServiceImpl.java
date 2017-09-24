@@ -27,7 +27,7 @@ public class ProductionServiceImpl implements ProductionService {
 	}
 
 	@Override
-	public Production update(Production t) {
+	public Production update(Production t, Integer id) {
 		return dao.save(t);
 	}
 

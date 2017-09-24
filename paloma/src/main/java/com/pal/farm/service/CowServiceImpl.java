@@ -33,8 +33,9 @@ public class CowServiceImpl implements CowService {
 	}
 
 	@Override
-	public CowDTO update(CowDTO t) throws NotFound {
+	public CowDTO update(CowDTO t, Integer id) throws NotFound {
 		final Cow c = cowMapper.map(t);
+		c.setIdAnimal(id);
 		if ( cowDao.findOne(c.getIdAnimal()) instanceof Cow ) {
 			throw new NotFound();
 		}

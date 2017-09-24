@@ -2,6 +2,8 @@ package com.pal.farm.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +41,8 @@ public class UserController implements CRUD<User, Integer> {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public User update(@RequestBody User t) throws CannotProceed, NotFound {
-		return userService.update(t);
+	public User update(@RequestBody User t, @PathParam("id") Integer id) throws CannotProceed, NotFound {
+		return userService.update(t, id);
 	}
 
 	@Override

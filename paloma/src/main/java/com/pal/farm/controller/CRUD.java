@@ -7,6 +7,8 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.springframework.data.domain.Pageable;
 
+import com.pal.farm.dto.ChickenDTO;
+
 
 public interface CRUD<T, ID extends Serializable> {
 
@@ -14,7 +16,7 @@ public interface CRUD<T, ID extends Serializable> {
 
 	void delete(T t) throws CannotProceed;
 
-	T update(T t) throws CannotProceed, NotFound;
+	T update(T t, Integer id) throws CannotProceed, NotFound;
 
 	List<T> getAll(Pageable pageable) throws NotFound;
 

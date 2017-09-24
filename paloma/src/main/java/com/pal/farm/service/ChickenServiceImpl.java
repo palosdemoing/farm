@@ -36,8 +36,9 @@ public class ChickenServiceImpl implements ChickenService {
 	}
 
 	@Override
-	public ChickenDTO update(ChickenDTO t) throws NotFound {
+	public ChickenDTO update(ChickenDTO t, Integer id) throws NotFound {
 		final Chicken c = chickenMapper.map(t);
+		c.setIdAnimal(id);
 		if ( chickenDao.findOne(c.getIdAnimal()) instanceof Chicken ) {
 			throw new NotFound();
 		}

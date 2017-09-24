@@ -2,6 +2,8 @@ package com.pal.farm.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +42,8 @@ public class CowController implements CRUD<CowDTO, Integer> {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public CowDTO update(@RequestBody CowDTO t) throws CannotProceed, NotFound {
-		return cowService.update(t);
+	public CowDTO update(@RequestBody CowDTO t, @PathParam("id") Integer id) throws CannotProceed, NotFound {
+		return cowService.update(t, id);
 	}
 
 	@Override

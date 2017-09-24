@@ -2,6 +2,8 @@ package com.pal.farm.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +43,9 @@ public class ProductionController implements CRUD<Production, Integer> {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public Production update(@RequestBody Production t) throws CannotProceed, NotFound {
+	public Production update(@RequestBody Production t, @PathParam("id") Integer id) throws CannotProceed, NotFound {
 		log.info("Vamos a actualizar Production");
-		return productionService.update(t);
+		return productionService.update(t, id);
 	}
 
 	@Override

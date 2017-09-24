@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pal.farm.model.Cow;
 
+
 @Transactional
 @Repository
 public interface CowDAO extends AnimalDAO {

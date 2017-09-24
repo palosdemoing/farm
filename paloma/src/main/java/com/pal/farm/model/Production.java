@@ -15,16 +15,15 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Table;
 
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 
 @NoArgsConstructor
 @Data
 @Entity
 @Table(name = "PRODUCTION")
 public class Production implements Serializable {
-
 
 	private static final long serialVersionUID = 1786920272455080095L;
 
@@ -40,24 +39,23 @@ public class Production implements Serializable {
 	@Column(name="STATE")
 	private Boolean state;
 
-	@Column(name="PRICE_BOUGTH")
-	private Double priceBougth;
+	@Column(name="COST_PRICE")
+	private Double costPrice;
 
-	@Column(name="PRICE_SOLD")
-	private Double priceSold;
-	
+	@Column(name="OFFER_PRICE")
+	private Double offerPrice;
 	
 	@ManyToOne
 	private Animal animal;
 	
 
-	
-	public Production(Date productionDate, Boolean state, Double priceBought, Double priceSold) {
+	public Production(Date productionDate, Boolean state, Double costPrice, Double offerPrice) {
 		
 		this.setProductionDate(productionDate);
 		this.setState(state);
-		this.setPriceBougth(priceBought);
-		this.setPriceSold(priceSold);
+		this.setCostPrice(costPrice);
+		this.setOfferPrice(offerPrice);
 		
 	}
+	
 }

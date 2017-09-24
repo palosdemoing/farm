@@ -2,7 +2,6 @@ package com.pal.farm.model;
 
 
 // https://github.com/netgloo/spring-boot-samples/tree/master/spring-boot-springdatajpa-inheritance/src/main/java/netgloo
-
 // https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
 // https://www.thoughts-on-java.org/complete-guide-inheritance-strategies-jpa-hibernate/
 
@@ -23,11 +22,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.ManyToOne;
-//import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
-import javax.persistence.TableGenerator;
 
-//import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -64,4 +60,5 @@ public abstract class Animal implements Serializable {
 		this.setType(type);
 		this.setFrecuency(frecuency);
 	}
+	
 }

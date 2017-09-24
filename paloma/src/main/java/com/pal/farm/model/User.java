@@ -32,7 +32,16 @@ public class User implements Serializable {
 	@Column(name="USERNAME", nullable=false)
 	private String username;
 	
+	@Column(name="EMAIL", nullable=false)
+	private String email;
+	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
 	private List<Animal> animals;
+	
+
+	public User(String username, String email) {
+		this.setUsername(username);
+		this.setEmail(email);
+	}
 
 }

@@ -1,5 +1,6 @@
 package com.pal.farm.dto;
 
+
 import java.io.Serializable;
 
 import java.util.Date;
@@ -14,12 +15,12 @@ public class ProductionDTO implements Serializable {
 
 	private static final long serialVersionUID = 9116134377449156831L;
 
-	private Date productionDate;
+	private Date date;
 
 	private Boolean state;
 
-	private Double priceBought;
+	private Double costPrice;
 
-	private Double priceSold;
+	private Double offerPrice;
 
 }

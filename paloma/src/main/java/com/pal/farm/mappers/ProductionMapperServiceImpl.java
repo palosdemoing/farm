@@ -1,4 +1,5 @@
-package com.pal.farm.service;
+package com.pal.farm.mappers;
+
 
 import org.springframework.stereotype.Service;
 
@@ -11,13 +12,13 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 
 	@Override
 	public ProductionDTO map(Production p) {
-		final ProductionDTO dto = new ProductionDTO(p.getProductionDate(), p.getState(), p.getPriceBougth(), p.getPriceSold());
+		final ProductionDTO dto = new ProductionDTO(p.getProductionDate(), p.getState(), p.getCostPrice(), p.getOfferPrice());
 		return dto;
 	}
 
 	@Override
 	public Production map(ProductionDTO dto) {
-		final Production p = new Production(dto.getProductionDate(), dto.getState(), dto.getPriceBought(), dto.getPriceSold());
+		final Production p = new Production(dto.getDate(), dto.getState(), dto.getCostPrice(), dto.getOfferPrice());
 		return p;
 	}
 

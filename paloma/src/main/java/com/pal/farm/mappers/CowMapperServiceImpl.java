@@ -1,4 +1,5 @@
-package com.pal.farm.service;
+package com.pal.farm.mappers;
+
 
 import org.springframework.stereotype.Service;
 

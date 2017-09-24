@@ -1,13 +1,12 @@
 package com.pal.farm.model;
 
-import javax.persistence.DiscriminatorValue;
+
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import lombok.NoArgsConstructor;
 
 
-//@DiscriminatorValue("COW")
 @Entity
 @NoArgsConstructor
 @Table(name = "COW")

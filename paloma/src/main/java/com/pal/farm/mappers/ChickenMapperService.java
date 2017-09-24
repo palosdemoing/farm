@@ -1,7 +1,9 @@
-package com.pal.farm.service;
+package com.pal.farm.mappers;
+
 
 import com.pal.farm.dto.ChickenDTO;
 import com.pal.farm.model.Chicken;
+
 
 public interface ChickenMapperService {
 

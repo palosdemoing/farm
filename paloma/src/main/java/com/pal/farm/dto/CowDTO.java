@@ -1,5 +1,6 @@
 package com.pal.farm.dto;
 
+
 import java.io.Serializable;
 
 import lombok.AllArgsConstructor;

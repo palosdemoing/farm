@@ -31,7 +31,7 @@ public class CowServiceImpl implements CowService {
 	public void delete(CowDTO t, Integer id) {
 		final Cow c = cowMapper.map(t);
 		c.setIdAnimal(id);
-		cowDao.delete( cowMapper.map(t) );  // error 401
+		cowDao.delete(c);  // error 401
 	}
 
 	@Override

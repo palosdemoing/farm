@@ -34,7 +34,7 @@ public class ChickenServiceImpl implements ChickenService {
 	public void delete(ChickenDTO t, Integer id) {
 		final Chicken c = chickenMapper.map(t);
 		c.setIdAnimal(id);
-		chickenDao.delete( chickenMapper.map(t) );  // error 401
+		chickenDao.delete(c);  // error 401
 	}
 
 	@Override

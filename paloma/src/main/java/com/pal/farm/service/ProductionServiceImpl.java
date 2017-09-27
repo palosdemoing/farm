@@ -1,57 +1,57 @@
-//package com.pal.farm.service;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import org.omg.CosNaming.NamingContextPackage.NotFound;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.stereotype.Service;
-//
-//import com.pal.farm.dao.ProductionDAO;
-//import com.pal.farm.dto.ProductionDTO;
-//import com.pal.farm.mappers.ProductionMapperService;
-//
-//import com.pal.farm.model.Production;
-//
-//@Service
-//public class ProductionServiceImpl implements ProductionService {
-//
-//	@Autowired
-//	private ProductionMapperService productionMapper;
-//	
-//	@Autowired
-//	private ProductionDAO productionDao;
-//
-//	@Override
-//	public ProductionDTO create(ProductionDTO t) {
-//		return productionMapper.map(productionDao.save( productionMapper.map(t) ));
-//	}
-//
-//	@Override
-//	public void delete(ProductionDTO t, Integer id) {
-//		final Production p = productionMapper.map(t);
-//		p.setIdProduction(id);
-//		productionDao.delete(p); 
-//	}
-//
-//	@Override
-//	public ProductionDTO update(ProductionDTO t, Integer id) {
-//		final Production p = productionMapper.map(t);
-//		p.setIdProduction(id);
-//		return productionMapper.map( productionDao.save(p) );
-//	}
-//	
-//	@Override
-//	public List<ProductionDTO> getAll(Pageable pageable) {
-//		final List<ProductionDTO> productions = new ArrayList<>();
-//		productionDao.findAll(pageable).forEach(p -> productions.add( productionMapper.map(p)));
-//		return productions;
-//	}
-//
-//	@Override
-//	public ProductionDTO findById(Integer id) {
-//		return productionMapper.map( productionDao.findOne(id) );
-//	}
-//
-//}
+package com.pal.farm.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
+import com.pal.farm.dao.ProductionDAO;
+import com.pal.farm.model.Production;
+
+
+@Service
+public class ProductionServiceImpl implements ProductionService {
+	
+	@Autowired
+	private ProductionDAO productionDao;
+
+	@Override
+	public Production create(Production t) {
+		return productionDao.save(t);
+	}
+
+	@Override
+	public void delete(Production t) throws CannotProceed {
+		productionDao.delete(t);
+	}
+
+	@Override
+	public void update(Production t) throws NotFound {
+		final Production p = findById(t.getIdProduction());
+		if ( p == null ) {
+			throw new NotFound();
+		}
+		// rescatar datos del objeto para no resetear los atributos
+		productionDao.save(p);
+	}
+	
+	@Override
+	public List<Production> getAll(Pageable pageable) throws CannotProceed {
+		if (pageable.getPageSize() > 10) {
+			throw new CannotProceed();
+		}
+		final List<Production> productions = new ArrayList<>();
+		productionDao.findAll(pageable).forEach(p -> productions.add(p));
+		return productions;
+	}
+
+	@Override
+	public Production findById(Integer id) {
+		return productionDao.findOne(id);
+	}
+
+}

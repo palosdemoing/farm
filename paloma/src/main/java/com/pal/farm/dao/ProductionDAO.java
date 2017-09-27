@@ -12,6 +12,6 @@ import com.pal.farm.model.Production;
 @Repository
 public interface ProductionDAO extends PagingAndSortingRepository<Production, Integer> {
 	
-	public List<Production> findAllByProductionDateAndAnimal(String date, String animal);
+	public List<Production> findAllByAnimal(String date, String animal);
 
 }

@@ -27,16 +27,18 @@ public class ChickenServiceImpl implements ChickenService {
 	}
 
 	@Override
-	public void delete(Chicken t) throws CannotProceed{
+	public void delete(Chicken t) throws CannotProceed {
 //		chickenDao.delete(c);  // error 401
 		throw new CannotProceed();
 	}
 
 	@Override
-	public void update(Chicken c) throws NotFound {
-//		if ( findById(c.getIdAnimal()) instanceof Chicken ) {
-//			throw new NotFound();
-//		}
+	public void update(Chicken t) throws NotFound {
+		final Chicken c = findById(t.getIdAnimal());
+		if ( !(c instanceof Chicken) ) {
+			throw new NotFound();
+		}
+		// rescatar datos del objeto para no resetear los atributos
 		chickenDao.save(c);
 	}
 

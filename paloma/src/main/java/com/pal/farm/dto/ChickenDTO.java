@@ -20,6 +20,6 @@ public class ChickenDTO implements Serializable {
 
 	private String frecuency;
 	
-	private List<String> productions;
+	private List<Integer> productions;
 
 }

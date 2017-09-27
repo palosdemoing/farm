@@ -7,14 +7,20 @@ import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class ProductionDTO implements Serializable {
 
 	private static final long serialVersionUID = 9116134377449156831L;
 
+	private String animalClass;
+
+	private String animalType;
+	
 	private Date date;
 
 	private Boolean state;

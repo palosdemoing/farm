@@ -7,8 +7,8 @@ import com.pal.farm.model.Chicken;
 
 public interface ChickenMapperService {
 
-	ChickenDTO map(Chicken c);
+	ChickenDTO toDTO(Chicken c); // extends MapperService<Chicken, ChickenDTO> {
 
-	Chicken map(ChickenDTO dto);
+	Chicken toModel(ChickenDTO dto);
 
 }

@@ -1,12 +1,16 @@
 package com.pal.farm.dto;
 
+
 import java.io.Serializable;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class UserDTO implements Serializable {
 

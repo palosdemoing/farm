@@ -10,16 +10,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Table;
+
+import javax.validation.constraints.NotNull;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 
-@NoArgsConstructor
+//@NoArgsConstructor
+@RequiredArgsConstructor
 @Data
 @Entity
 @Table(name = "PRODUCTION")
@@ -34,28 +37,30 @@ public class Production implements Serializable {
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="PRODUCTION_DATE")
+	@NotNull
 	private Date productionDate;
 	
 	@Column(name="STATE")
 	private Boolean state;
 
-	@Column(name="COST_PRICE")
+	@Column(name="COST_PRICE", nullable = false)
+	@NotNull
 	private Double costPrice;
 
-	@Column(name="OFFER_PRICE")
+	@Column(name="OFFER_PRICE", nullable = false)
+	@NotNull
 	private Double offerPrice;
-	
-	@ManyToOne
-	private Animal animal;
-	
 
-	public Production(Date productionDate, Boolean state, Double costPrice, Double offerPrice) {
-		
-		this.setProductionDate(productionDate);
-		this.setState(state);
-		this.setCostPrice(costPrice);
-		this.setOfferPrice(offerPrice);
-		
-	}
+	@Column(name="ANIMAL")
+	private Animal animal;
+//
+//	public Production(Date productionDate, Boolean state, Double costPrice, Double offerPrice) {
+//		
+//		this.setProductionDate(productionDate);
+//		this.setState(state);
+//		this.setCostPrice(costPrice);
+//		this.setOfferPrice(offerPrice);
+//		
+//	}
 	
 }

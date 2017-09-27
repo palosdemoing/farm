@@ -14,13 +14,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 
 @Data
 @Entity
-@NoArgsConstructor
+@RequiredArgsConstructor
 @Table(name = "USER")
 public class User implements Serializable {
 
@@ -28,22 +30,14 @@ public class User implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="ID_USER")
+	@Column(name = "ID_USER")
 	private Integer idUser;
 	
-	@Column(name="USERNAME", nullable=false)
+	@Column(name = "USERNAME", nullable = false, unique = true)
+	@NotNull
 	private String username;
 	
-	@Column(name="EMAIL", nullable=false)
-	private String email;
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Animal> animals;
-	
-
-	public User(String username, String email) {
-		this.setUsername(username);
-		this.setEmail(email);
-	}
 
 }

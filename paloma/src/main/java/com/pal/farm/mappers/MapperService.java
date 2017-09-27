@@ -1,14 +1,10 @@
 package com.pal.farm.mappers;
 
 
-import com.pal.farm.dto.ChickenDTO;
-import com.pal.farm.model.Chicken;
+public interface MapperService<M, DTO> {
+	
+	DTO toDTO(M m, Class<? extends DTO> dto);
 
-
-public interface MapperService {
-
-	ChickenDTO map(Chicken c);
-
-	Chicken map(ChickenDTO dto);
+	M toModel(DTO dto, Class<? extends M> m);
 
 }

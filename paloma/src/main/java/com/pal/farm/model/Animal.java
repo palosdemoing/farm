@@ -49,16 +49,13 @@ public abstract class Animal implements Serializable {
 	@Column(name="FRECUENCY")
 	private String frecuency;
 	
-	@ManyToOne
-	private User user;
-	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "animal")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Production> productions;
 	
-
-	public Animal(String type, String frecuency) {
-		this.setType(type);
-		this.setFrecuency(frecuency);
-	}
+	
+//	public Animal(String type, String frecuency) {
+//		this.setType(type);
+//		this.setFrecuency(frecuency);
+//	}
 	
 }

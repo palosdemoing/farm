@@ -2,78 +2,23 @@ package com.pal.farm.controller;
 
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.http.HttpStatus;
-//import org.springframework.web.bind.annotation.ControllerAdvice;
-//import org.springframework.web.bind.annotation.ExceptionHandler;
-
-
-//@ResponseStatus(HttpStatus.UNAUTHORIZED)
-
 
 import com.pal.farm.dto.ChickenDTO;
-import com.pal.farm.service.ChickenService;
 
-import lombok.extern.slf4j.Slf4j;
+public interface ChickenController {
 
+	ChickenDTO create(ChickenDTO t);
 
-@Slf4j
-@RestController
-@RequestMapping(value = "/chicken")
-public class ChickenController implements CRUD<ChickenDTO, Integer> {
+	void delete(ChickenDTO t, Integer id) throws CannotProceed;
 
-	@Autowired
-	private ChickenService chickenService;
+	void update(ChickenDTO t, Integer id) throws NotFound;
 
-	@Override
-	@RequestMapping(method = RequestMethod.POST)
-	public ChickenDTO create(@RequestBody ChickenDTO t) throws NotFound {
-		return (ChickenDTO) chickenService.create(t);
-	}
+	List<ChickenDTO> getAll(Integer page, Integer size) throws CannotProceed;
 
-	@Override
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody ChickenDTO t, @PathParam("id") Integer id) throws CannotProceed {
-		chickenService.delete(t, id);
-		// directamente el 401????
-	}
+	ChickenDTO findById(Integer id) throws NotFound;
 
-	@Override
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ChickenDTO update(@RequestBody ChickenDTO t, @PathParam("id") Integer id) throws CannotProceed, NotFound {
-		return (ChickenDTO) chickenService.update(t, id);
-	}
+	List<ChickenDTO> findByTypeAndFrecuency(String type, String frecuency);
 
-	@Override
-	@RequestMapping(method=RequestMethod.GET)
-	public List<ChickenDTO> getAll(Pageable pageable) throws NotFound{
-		log.info("Intento paginación ");
-		return chickenService.getAll(pageable);
-	}
-
-	@Override
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ChickenDTO findById(@PathVariable("id") Integer id) throws NotFound {
-		return (ChickenDTO) chickenService.findById(id);
-	}
-
-//	@Override
-	@RequestMapping(value = "/search", method = RequestMethod.GET)
-	public List<ChickenDTO> findByTypeAndFrecuency(@RequestParam("type") String type, @RequestParam("frecuency") String frecuency) {
-		return chickenService.findByTypeAndFrecuency(type, frecuency);
-	}
- 
 }

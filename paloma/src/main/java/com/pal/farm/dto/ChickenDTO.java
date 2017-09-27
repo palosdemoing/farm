@@ -2,12 +2,15 @@ package com.pal.farm.dto;
 
 
 import java.io.Serializable;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 
 @AllArgsConstructor
+@RequiredArgsConstructor
 @Data
 public class ChickenDTO implements Serializable {
 
@@ -16,5 +19,7 @@ public class ChickenDTO implements Serializable {
 	private String type;
 
 	private String frecuency;
+	
+	private List<String> productions;
 
 }

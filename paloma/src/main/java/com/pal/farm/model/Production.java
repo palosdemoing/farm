@@ -17,11 +17,9 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 
-//@NoArgsConstructor
 @RequiredArgsConstructor
 @Data
 @Entity
@@ -53,14 +51,5 @@ public class Production implements Serializable {
 
 	@Column(name="ANIMAL")
 	private Animal animal;
-//
-//	public Production(Date productionDate, Boolean state, Double costPrice, Double offerPrice) {
-//		
-//		this.setProductionDate(productionDate);
-//		this.setState(state);
-//		this.setCostPrice(costPrice);
-//		this.setOfferPrice(offerPrice);
-//		
-//	}
 	
 }

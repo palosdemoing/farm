@@ -3,8 +3,6 @@ package com.pal.farm.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.websocket.server.PathParam;
-
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +52,7 @@ public class ChickenControllerImpl implements ChickenController {
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void update(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws NotFound {
-		log.info(String.format("update chickenDTO" + id));
 		Chicken c = chickenMapper.toModel(t);
-		log.info(String.format("update chicken" + c));
 		c.setIdAnimal(id);
 		chickenService.update(c);
 	}

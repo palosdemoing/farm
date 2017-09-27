@@ -16,10 +16,6 @@ import lombok.RequiredArgsConstructor;
 public class ProductionDTO implements Serializable {
 
 	private static final long serialVersionUID = 9116134377449156831L;
-
-	private String animalClass;
-
-	private String animalType;
 	
 	private Date date;
 
@@ -28,5 +24,7 @@ public class ProductionDTO implements Serializable {
 	private Double costPrice;
 
 	private Double offerPrice;
+
+	private Integer animal;
 
 }

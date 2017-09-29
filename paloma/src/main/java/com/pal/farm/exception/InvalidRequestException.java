@@ -1,4 +1,4 @@
-package com.pal.farm.exceptions;
+package com.pal.farm.exception;
 
 public class InvalidRequestException extends Exception {
 

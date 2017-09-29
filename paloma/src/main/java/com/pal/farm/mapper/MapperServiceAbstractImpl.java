@@ -1,4 +1,4 @@
-package com.pal.farm.mappers;
+package com.pal.farm.mapper;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;

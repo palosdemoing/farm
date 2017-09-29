@@ -1,6 +1,8 @@
 package com.pal.farm.dao;
 
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +16,8 @@ import com.pal.farm.model.Animal;
 @Transactional
 @Repository
 public interface AnimalDAO extends PagingAndSortingRepository<Animal, Integer> {
+
+	List<Animal> findByUser(String username);  // 	Integer idUser = userService.findByUsername(username).getIdUser();
 	
 //	@Query(value = "SELECT sum(amount) FROM account_transaction WHERE account_id = :accountId")
 	// animales prolíficos... todas las producciones de cada uno then topN

@@ -18,6 +18,6 @@ public class UserDTO implements Serializable {
 
 	private String username;
 
-	private List<String> animals;
+	private List<Integer> animals;
 
 }

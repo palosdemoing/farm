@@ -1,4 +1,4 @@
-package com.pal.farm.mappers;
+package com.pal.farm.mapper;
 
 
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pal.farm.dao.ChickenDAO;
 import com.pal.farm.dao.ProductionDAO;
 import com.pal.farm.dto.ChickenDTO;
 import com.pal.farm.model.Chicken;
@@ -22,19 +21,18 @@ public class ChickenMapperServiceImpl implements ChickenMapperService {
 	private DozerBeanMapper mapper;
 
 	@Autowired 
-	private ChickenDAO chickenDao;
-
-	@Autowired 
 	private ProductionDAO productionDao;
 	
 	@Override
 	public ChickenDTO toDTO(Chicken c) {
 		final ChickenDTO dto;
 		dto = mapper.map(c, ChickenDTO.class);
+		
 		final List<Integer> productions = new ArrayList<Integer>();
-		chickenDao.findOne(c.getIdAnimal()).getProductions()
-							.forEach(p -> productions.add(p.getIdProduction()));
+		c.getProductions().forEach(p -> productions.add(p.getIdProduction()));
+		
 		dto.setProductions(productions);
+		
 		return dto; 
 	}
 
@@ -42,8 +40,10 @@ public class ChickenMapperServiceImpl implements ChickenMapperService {
 	public Chicken toModel(ChickenDTO dto) {
 		final Chicken c;
 		c = mapper.map(dto, Chicken.class);
+		
 		final List<Production> productions = new ArrayList<Production>();
-		dto.getProductions().forEach(idProduction -> productions.add(productionDao.findOne(idProduction)));
+		dto.getProductions().forEach(id -> productions.add(productionDao.findOne(id)));
+		
 		c.setProductions(productions);
 		return c;
 	}

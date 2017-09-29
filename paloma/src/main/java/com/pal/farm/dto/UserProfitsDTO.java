@@ -15,5 +15,5 @@ public class UserProfitsDTO implements Serializable {
 
 	private String user;
 	
-	private String profits;
+	private Double profits;
 }

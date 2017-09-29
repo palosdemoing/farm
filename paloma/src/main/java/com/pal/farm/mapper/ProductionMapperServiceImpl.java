@@ -1,4 +1,4 @@
-package com.pal.farm.mappers;
+package com.pal.farm.mapper;
 
 
 import org.dozer.DozerBeanMapper;
@@ -26,11 +26,14 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 	@Qualifier("AnimalDAO")
 	public AnimalDAO animalDao;
 	
+	
 	@Override
 	public ProductionDTO toDTO(Production p) {
 		final ProductionDTO dto;
 		dto = mapper.map(p, ProductionDTO.class);
-//		if (p.getAnimal() != null)		dto.setAnimal(p.getAnimal().getIdAnimal());
+		if (p.getAnimal() != null) {
+			dto.setAnimal(p.getAnimal().getIdAnimal());
+		}
 		return dto; 
 	}
 
@@ -39,7 +42,9 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 		final Production p;
 		final Animal a = animalDao.findOne(dto.getAnimal());
 		p = mapper.map(dto, Production.class);
-//		if (a != null)		p.setAnimal(a);
+		if (a != null) {
+			p.setAnimal(a);
+		}
 		return p;
 	}
 

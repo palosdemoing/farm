@@ -10,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pal.farm.dao.UserDAO;
-import com.pal.farm.dto.UserDTO;
-import com.pal.farm.mappers.UserMapperService;
 import com.pal.farm.model.User;
 
 

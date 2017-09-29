@@ -1,4 +1,4 @@
-package com.pal.farm.mappers;
+package com.pal.farm.mapper;
 
 
 import com.pal.farm.dto.ChickenDTO;

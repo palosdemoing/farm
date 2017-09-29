@@ -20,6 +20,6 @@ public class CowDTO implements Serializable {
 
 	private String frecuency;
 	
-	private List<String> productions;
+	private List<Integer> productions;
 
 }

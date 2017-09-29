@@ -28,7 +28,7 @@ public class ChickenServiceImpl implements ChickenService {
 
 	@Override
 	public void delete(Chicken t) throws CannotProceed {
-//		chickenDao.delete(c);  // error 401
+//		chickenDao.delete(c); 
 		throw new CannotProceed();
 	}
 

@@ -9,7 +9,7 @@ import lombok.Data;
 
 @AllArgsConstructor
 @Data
-public class TopNAnimalsProfitsDTO implements Serializable {
+public class AnimalProfitsDTO implements Serializable {
 
 	private static final long serialVersionUID = 8920720499595714726L;
 

@@ -24,6 +24,7 @@ public class ErrorControllerImpl implements ErrorController {
 //		return new MessageDTO(e.getMessage());
 //	}
 	
+	@Override
 	@ResponseBody
 	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -31,6 +32,7 @@ public class ErrorControllerImpl implements ErrorController {
 		return new MessageDTO(e.getMessage());
 	}
 
+	@Override
 	@ResponseBody
 	@ExceptionHandler(CannotProceed.class)
 	@ResponseStatus(HttpStatus.FORBIDDEN)
@@ -38,6 +40,7 @@ public class ErrorControllerImpl implements ErrorController {
 		return new MessageDTO("No permitido");
 	}
 
+	@Override
 	@ResponseBody
 	@ExceptionHandler(NotFound.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)

@@ -1,4 +1,4 @@
-package com.pal.farm.controller;
+package com.pal.farm.service;
 
 
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.data.domain.Pageable;
 
 
-public interface CRUD<T, ID extends Serializable> {
+public interface CRUDService<T, ID extends Serializable> {
 
 	T create(T t);
 
@@ -19,6 +19,6 @@ public interface CRUD<T, ID extends Serializable> {
 
 	List<T> getAll(Pageable pageable) throws CannotProceed;
 
-	T findById(ID id);
+	T findById(ID id) throws NotFound;
 
 }

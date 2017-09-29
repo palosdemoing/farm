@@ -19,13 +19,13 @@ import com.pal.farm.model.Production;
 public class ChickenMapperServiceImpl implements ChickenMapperService {
 
 	@Autowired 
-	public DozerBeanMapper mapper;
+	private DozerBeanMapper mapper;
 
 	@Autowired 
-	public ChickenDAO chickenDao;
+	private ChickenDAO chickenDao;
 
 	@Autowired 
-	public ProductionDAO productionDao;
+	private ProductionDAO productionDao;
 	
 	@Override
 	public ChickenDTO toDTO(Chicken c) {

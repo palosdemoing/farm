@@ -9,7 +9,7 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 import com.pal.farm.dto.ProductionDTO;
 
 
-public interface ProductionController {
+public interface ProductionController { // extends CRUD<ProductionDTO, Integer>{
 
 	ProductionDTO create(ProductionDTO t);
 

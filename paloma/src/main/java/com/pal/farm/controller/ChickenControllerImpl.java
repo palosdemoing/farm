@@ -22,7 +22,6 @@ import com.pal.farm.service.ChickenService;
 import lombok.extern.slf4j.Slf4j;
 
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/chicken")
 public class ChickenControllerImpl implements ChickenController { 

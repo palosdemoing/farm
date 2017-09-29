@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pal.farm.dto.ProductionDTO;
-import com.pal.farm.mappers.ProductionMapperService;
+import com.pal.farm.mapper.ProductionMapperService;
 import com.pal.farm.model.Production;
 import com.pal.farm.service.ProductionService;
 

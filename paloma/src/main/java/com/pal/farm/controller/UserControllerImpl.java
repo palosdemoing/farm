@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pal.farm.dto.UserDTO;
-import com.pal.farm.mappers.UserMapperService;
+import com.pal.farm.mapper.UserMapperService;
 import com.pal.farm.model.User;
 import com.pal.farm.service.UserService;
 

@@ -15,66 +15,66 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.pal.farm.dto.ChickenDTO;
-import com.pal.farm.mapper.ChickenMapperService;
-import com.pal.farm.model.Chicken;
-import com.pal.farm.service.ChickenService;
+import com.pal.farm.dto.CowDTO;
+import com.pal.farm.mapper.CowMapperService;
+import com.pal.farm.model.Cow;
+import com.pal.farm.service.CowService;
 
 
 @RestController
-@RequestMapping(value = "/chicken")
-public class ChickenControllerImpl implements ChickenController { 
+@RequestMapping(value = "/cow")
+public class CowControllerImpl implements CowController { 
 
 	@Autowired
-	private ChickenService chickenService;
+	private CowService cowService;
 	
 	@Autowired
-	private ChickenMapperService chickenMapper;
+	private CowMapperService cowMapper;
 
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
-	public ChickenDTO create(@RequestBody ChickenDTO t) {
-		Chicken c = chickenMapper.toModel(t);
-		c = chickenService.create(c);
-		return chickenMapper.toDTO(c);
+	public CowDTO create(@RequestBody CowDTO t) {
+		Cow c = cowMapper.toModel(t);
+		c = cowService.create(c);
+		return cowMapper.toDTO(c);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws CannotProceed {
-		final Chicken c = chickenMapper.toModel(t);
+	public void delete(@RequestBody CowDTO t, @PathVariable("id") Integer id) throws CannotProceed {
+		final Cow c = cowMapper.toModel(t);
 		c.setIdAnimal(id);
-		chickenService.delete(c);
+		cowService.delete(c);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void update(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws NotFound {
-		final Chicken c = chickenMapper.toModel(t);
+	public void update(@RequestBody CowDTO t, @PathVariable("id") Integer id) throws NotFound {
+		final Cow c = cowMapper.toModel(t);
 		c.setIdAnimal(id);
-		chickenService.update(c);
+		cowService.update(c);
 	}
 
 	@Override
 	@RequestMapping(method=RequestMethod.GET)
-	public List<ChickenDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="0") Integer page,
+	public List<CowDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="0") Integer page,
 								   @RequestParam(name = "size", required = false, defaultValue="10") Integer size) throws CannotProceed {
 		
-		final List<ChickenDTO> chickens = new ArrayList<>();
-		chickenService.getAll( new PageRequest(page + 1, size) ).forEach(c -> chickens.add(chickenMapper.toDTO(c)) );
-		return chickens;
+		final List<CowDTO> cows = new ArrayList<>();
+		cowService.getAll( new PageRequest(page + 1, size) ).forEach(c -> cows.add(cowMapper.toDTO(c)) );
+		return cows;
 		
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ChickenDTO findById(@PathVariable("id") Integer id) throws NotFound {
+	public CowDTO findById(@PathVariable("id") Integer id) throws NotFound {
 		
-		final Chicken c = chickenService.findById(id);
+		final Cow c = cowService.findById(id);
 		if (c.getIdAnimal() == null) {
 			throw new NotFound();
 		}
-		return chickenMapper.toDTO(c);
+		return cowMapper.toDTO(c);
 		
 	}
 	

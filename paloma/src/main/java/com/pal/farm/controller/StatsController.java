@@ -9,7 +9,7 @@ import com.pal.farm.dto.AnimalProfitsDTO;
 import com.pal.farm.dto.UserProfitsDTO;
 
 
-public interface ServiceController {
+public interface StatsController {
 
 	List<AnimalProfitsDTO> profitsByAnimal(Integer n);
 	

@@ -1,11 +1,9 @@
 package com.pal.farm.service;
 
-import java.util.List;
 
-import com.pal.farm.dto.CowDTO;
+import com.pal.farm.model.Cow;
 
-public interface CowService extends CRUDService<CowDTO, Integer> {
-	
-	public List<CowDTO> findByTypeAndFrecuency(String type, String frecuency);
+
+public interface CowService extends CRUDService<Cow, Integer> {
 
 }

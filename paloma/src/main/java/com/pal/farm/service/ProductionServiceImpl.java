@@ -1,6 +1,7 @@
 package com.pal.farm.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pal.farm.dao.ProductionDAO;
+import com.pal.farm.model.Animal;
 import com.pal.farm.model.Production;
 
 
@@ -52,6 +54,16 @@ public class ProductionServiceImpl implements ProductionService {
 	@Override
 	public Production findById(Integer id) {
 		return productionDao.findOne(id);
+	}
+
+	@Override
+	public List<Production> productionsBetweenDates(Date startDate, Date endsDate) {
+		return productionDao.productionsBetweenDates(startDate, endsDate);
+	}
+
+	@Override
+	public List<Production> productionsByAnimal(Integer idAnimal) {
+		return productionDao.findAllByAnimal(idAnimal);
 	}
 
 }

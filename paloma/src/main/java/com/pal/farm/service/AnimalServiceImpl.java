@@ -7,6 +7,7 @@ import java.util.List;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -17,18 +18,17 @@ import com.pal.farm.model.Animal;
 @Service
 public class AnimalServiceImpl implements AnimalService {
 	
-//	@Autowired
-//	private AnimalDAO animalDao;
+	@Autowired
+	@Qualifier("AnimalDAO")
+	private AnimalDAO animalDao;
+	
+	@Autowired
+	private UserService userService;
 
 	@Override
 	public List<Animal> findByUser(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		// 		Integer idUser = userService.findByUsername(username).getIdUser();
+		return animalDao.findByUser(username);		
 	}
-	
-//	@Override
-//	public List<Animal> findByUser(String username) {
-//		return animalDao.findByUser(username);		
-//	}
 
 }

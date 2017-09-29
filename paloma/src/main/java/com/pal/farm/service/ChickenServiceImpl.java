@@ -61,11 +61,4 @@ public class ChickenServiceImpl implements ChickenService {
 		return (Chicken) chickenDao.findOne(id);
 	}
 
-	@Override
-	public List<Chicken> findByTypeAndFrecuency(String type, String frecuency) {
-		final List<Chicken> chickens = new ArrayList<>();
-		chickenDao.findOneByTypeAndFrecuency(type, frecuency).forEach(c -> chickens.add(c) );
-		return chickens;
-	}
-
 }

@@ -20,14 +20,14 @@ public interface ProductionDAO extends PagingAndSortingRepository<Production, In
 	
 	public List<Production> findAllByAnimal(Integer id);
 	
-	@Query("SELECT p FROM Production p WHERE p.production_date BETWEEN :from AND :to AND p.user = :username")
-	public List<Production> findProductionsByUserAndDateRange(
-//	    @Param("from") @Temporal(TemporalType.TIMESTAMP) Date startDay,
-//	    @Param("to") @Temporal(TemporalType.TIMESTAMP) Date endDay,
-	    @Param("username") String username
-	);
-	
-	@Query("SELECT p FROM Production p WHERE p.production_date BETWEEN :from AND :to AND p.user = :username")
-	public List<Production> productionsBetweenDates(Date startDate, Date endsDate);
+//	@Query("SELECT p FROM Production p WHERE p.production_date BETWEEN :from AND :to AND p.user = :username")
+//	public List<Production> findProductionsByUserAndDateRange(
+////	    @Param("from") @Temporal(TemporalType.TIMESTAMP) Date startDay,
+////	    @Param("to") @Temporal(TemporalType.TIMESTAMP) Date endDay,
+//	    @Param("username") String username
+//	);
+//	
+//	@Query("SELECT p FROM Production p WHERE p.production_date BETWEEN :from AND :to")
+//	public List<Production> productionsBetweenDates(Date startDate, Date endsDate);
 	
 }

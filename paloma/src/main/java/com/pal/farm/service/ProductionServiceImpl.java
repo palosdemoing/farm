@@ -56,10 +56,10 @@ public class ProductionServiceImpl implements ProductionService {
 		return productionDao.findOne(id);
 	}
 
-	@Override
-	public List<Production> productionsBetweenDates(Date startDate, Date endsDate) {
-		return productionDao.productionsBetweenDates(startDate, endsDate);
-	}
+//	@Override
+//	public List<Production> productionsBetweenDates(Date startDate, Date endsDate) {
+//		return productionDao.productionsBetweenDates(startDate, endsDate);
+//	}
 
 	@Override
 	public List<Production> productionsByAnimal(Integer idAnimal) {

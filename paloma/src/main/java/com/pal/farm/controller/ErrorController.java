@@ -10,4 +10,6 @@ public interface ErrorController {
 
 	MessageDTO errorGetArgs(Exception e);
 
+	MessageDTO errorAssociation(Exception e);
+
 }

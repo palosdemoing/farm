@@ -30,7 +30,7 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 	@Override
 	public ProductionDTO toDTO(Production p) {
 		final ProductionDTO dto = mapper.map(p, ProductionDTO.class);
-		if (p != null) {
+		if (p.getAnimal() != null) {
 			dto.setAnimal(p.getAnimal().getIdAnimal());
 		}
 		return dto; 
@@ -39,7 +39,10 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 	@Override
 	public Production toModel(ProductionDTO dto) {
 		final Production p = mapper.map(dto, Production.class);
-		final Animal a = animalDao.findOne(dto.getAnimal());
+		Animal a = null;
+		if (dto.getAnimal() != null) {
+			a = animalDao.findOne(dto.getAnimal());
+		}
 		if (a != null) {
 			p.setAnimal(a);
 		}

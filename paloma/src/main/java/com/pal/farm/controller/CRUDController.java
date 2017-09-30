@@ -6,18 +6,21 @@ import java.util.List;
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 
+import com.pal.farm.dto.UserDTO;
+import com.pal.farm.exception.AssociationNotPermittedException;
+import com.pal.farm.exception.InvalidRequestException;
+
 
 public interface CRUDController <T, ID extends Serializable>{
 
-	T create(T t);
+	T create(T t) throws NotFound, AssociationNotPermittedException;
 
-	void delete(T t, ID id) throws CannotProceed;
+	void delete(T t, ID id) throws NotFound, InvalidRequestException;
 
-	void update(T t, Integer id) throws NotFound;
+	void update(T t, ID id) throws NotFound, AssociationNotPermittedException;
 
 	List<T> getAll(Integer page, Integer size) throws CannotProceed;
 
 	T findById(Integer id) throws NotFound;
-
 
 }

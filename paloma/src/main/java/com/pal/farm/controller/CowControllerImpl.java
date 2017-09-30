@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pal.farm.dto.CowDTO;
+import com.pal.farm.exception.AssociationNotPermittedException;
+import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.mapper.CowMapperService;
 import com.pal.farm.model.Cow;
 import com.pal.farm.service.CowService;
@@ -33,7 +35,7 @@ public class CowControllerImpl implements CowController {
 
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
-	public CowDTO create(@RequestBody CowDTO t) {
+	public CowDTO create(@RequestBody CowDTO t) throws NotFound, AssociationNotPermittedException {
 		Cow c = cowMapper.toModel(t);
 		c = cowService.create(c);
 		return cowMapper.toDTO(c);
@@ -41,7 +43,7 @@ public class CowControllerImpl implements CowController {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody CowDTO t, @PathVariable("id") Integer id) throws CannotProceed {
+	public void delete(@RequestBody CowDTO t, @PathVariable("id") Integer id) throws NotFound, InvalidRequestException {
 		final Cow c = cowMapper.toModel(t);
 		c.setIdAnimal(id);
 		cowService.delete(c);
@@ -49,7 +51,7 @@ public class CowControllerImpl implements CowController {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void update(@RequestBody CowDTO t, @PathVariable("id") Integer id) throws NotFound {
+	public void update(@RequestBody CowDTO t, @PathVariable("id") Integer id) throws NotFound, AssociationNotPermittedException {
 		final Cow c = cowMapper.toModel(t);
 		c.setIdAnimal(id);
 		cowService.update(c);

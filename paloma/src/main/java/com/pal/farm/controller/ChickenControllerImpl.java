@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pal.farm.dto.ChickenDTO;
+import com.pal.farm.exception.AssociationNotPermittedException;
+import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.mapper.ChickenMapperService;
 import com.pal.farm.model.Chicken;
 import com.pal.farm.service.ChickenService;
@@ -35,7 +37,7 @@ public class ChickenControllerImpl implements ChickenController {
 
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
-	public ChickenDTO create(@RequestBody ChickenDTO t) {
+	public ChickenDTO create(@RequestBody ChickenDTO t) throws NotFound, AssociationNotPermittedException {
 		Chicken c = chickenMapper.toModel(t);
 		log.info("creando: " + c);
 		c = chickenService.create(c);
@@ -44,7 +46,7 @@ public class ChickenControllerImpl implements ChickenController {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws CannotProceed {
+	public void delete(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws InvalidRequestException {
 		final Chicken c = chickenMapper.toModel(t);
 		log.info("borrando: " + c);
 		c.setIdAnimal(id);
@@ -53,7 +55,7 @@ public class ChickenControllerImpl implements ChickenController {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void update(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws NotFound {
+	public void update(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws NotFound, AssociationNotPermittedException {
 		final Chicken c = chickenMapper.toModel(t);
 		c.setIdAnimal(id);
 		log.info("actualizando: " + c);
@@ -62,11 +64,12 @@ public class ChickenControllerImpl implements ChickenController {
 
 	@Override
 	@RequestMapping(method=RequestMethod.GET)
-	public List<ChickenDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="0") Integer page,
-								   @RequestParam(name = "size", required = false, defaultValue="10") Integer size) throws CannotProceed {
+	public List<ChickenDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="1") Integer page,
+								   @RequestParam(name = "size", required = false, defaultValue="10") Integer size) 
+			throws CannotProceed{
 		
 		final List<ChickenDTO> chickens = new ArrayList<>();
-		chickenService.getAll( new PageRequest(page + 1, size) ).forEach(c -> chickens.add(chickenMapper.toDTO(c)) );
+		chickenService.getAll( new PageRequest(page - 1, size) ).forEach(c -> chickens.add(chickenMapper.toDTO(c)) );
 		log.info("listando: " + chickens);
 		return chickens;
 		

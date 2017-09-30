@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pal.farm.dto.ProductionDTO;
+import com.pal.farm.exception.AssociationNotPermittedException;
+import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.mapper.ProductionMapperService;
 import com.pal.farm.model.Production;
 import com.pal.farm.service.ProductionService;
@@ -33,7 +35,7 @@ public class ProductionControllerImpl implements ProductionController {
 
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
-	public ProductionDTO create(@RequestBody ProductionDTO t) {
+	public ProductionDTO create(@RequestBody ProductionDTO t) throws NotFound, AssociationNotPermittedException {
 		Production p = productionMapper.toModel(t);
 		p = productionService.create(p);
 		return productionMapper.toDTO(p);
@@ -42,7 +44,7 @@ public class ProductionControllerImpl implements ProductionController {
 	
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody ProductionDTO t, @PathVariable("id") Integer id) throws CannotProceed {
+	public void delete(@RequestBody ProductionDTO t, @PathVariable("id") Integer id) throws InvalidRequestException {
 		final Production p = productionMapper.toModel(t);
 		p.setIdProduction(id);
 		productionService.delete(p);
@@ -50,7 +52,7 @@ public class ProductionControllerImpl implements ProductionController {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void update(@RequestBody ProductionDTO t, @PathVariable("id") Integer id) throws NotFound {
+	public void update(@RequestBody ProductionDTO t, @PathVariable("id") Integer id) throws NotFound, AssociationNotPermittedException {
 		Production p = productionMapper.toModel(t);
 		p.setIdProduction(id);
 		productionService.update(p);

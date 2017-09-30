@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pal.farm.dto.UserDTO;
+import com.pal.farm.exception.AssociationNotPermittedException;
+import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.mapper.UserMapperService;
 import com.pal.farm.model.User;
 import com.pal.farm.service.UserService;
@@ -34,35 +36,39 @@ public class UserControllerImpl implements UserController {
 
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
-	public UserDTO create(@RequestBody UserDTO t) {
+	public UserDTO create(@RequestBody UserDTO t) throws NotFound, AssociationNotPermittedException {
 		User u = userMapper.toModel(t);
 		u = userService.create(u);
 		return userMapper.toDTO(u);
 	}
 
 	@Override
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody UserDTO t, @PathParam("id") Integer id) throws CannotProceed {
+	@RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
+	public void delete(@RequestBody UserDTO t, @PathParam("username") String username) throws NotFound, InvalidRequestException {
 		final User u = userMapper.toModel(t);
-		u.setIdUser(id);
+		u.setIdUser(userService.findByUsername(username).getIdUser());
+		if (u.getIdUser() == null) {
+			throw new NotFound();
+		}
 		userService.delete(u);
 	}
 
 	@Override
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public void update(@RequestBody UserDTO t, @PathParam("id") Integer id) throws NotFound {
+	@RequestMapping(value = "/{username}", method = RequestMethod.PUT)
+	public void update(@RequestBody UserDTO t, @PathParam("username") String username) throws NotFound, AssociationNotPermittedException {
 		User u = userMapper.toModel(t);
-		u.setIdUser(id);
+		u.setIdUser(userService.findByUsername(username).getIdUser());
 		userService.update(u);
 	}
 
 	@Override
 	@RequestMapping(method = RequestMethod.GET) 
-	public List<UserDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="0") Integer page,
-			      @RequestParam(name = "size", required = false, defaultValue="10") Integer size) throws CannotProceed {
+	public List<UserDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="1") Integer page,
+			      				@RequestParam(name = "size", required = false, defaultValue="10") Integer size) 
+			throws CannotProceed {
 
 		final List<UserDTO> users = new ArrayList<>();
-		userService.getAll( new PageRequest(page + 1, size) ).forEach(u -> users.add(userMapper.toDTO(u)) );
+		userService.getAll( new PageRequest(page - 1, size) ).forEach(u -> users.add(userMapper.toDTO(u)) );
 		return users;
 		
 	}
@@ -82,13 +88,11 @@ public class UserControllerImpl implements UserController {
 	@Override
 	@RequestMapping(value = "/{name}", method = RequestMethod.GET)
 	public UserDTO findByUsername(@PathVariable("name") String name) throws NotFound {
-		
 		final User u = userService.findByUsername(name);
 		if (u == null) {
 			throw new NotFound();
 		}
 		return userMapper.toDTO(u);
 	}
-
 
 }

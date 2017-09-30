@@ -29,10 +29,11 @@ public class UserMapperServiceImpl implements UserMapperService {  // extends Ma
 	public UserDTO toDTO(User u) {
 		final UserDTO dto = mapper.map(u, UserDTO.class);
 		
-		final List<Integer> animals = new ArrayList<Integer>();
-		u.getAnimals().forEach(a -> animals.add(a.getIdAnimal()));
+		final List<String> animals = new ArrayList<String>();
+		u.getAnimals().forEach(a -> animals.add(a.getIdAnimal().toString()));
 		
 		dto.setAnimals(animals);
+//		Animal(idAnimal=1, type=chicken, frecuency=diaria, user=null, productions=[]) requiere setear el user cuando linked
 		
 		return dto; 
 	}
@@ -42,10 +43,11 @@ public class UserMapperServiceImpl implements UserMapperService {  // extends Ma
 		final User c = mapper.map(dto, User.class);
 		
 		final List<Animal> animals = new ArrayList<Animal>();
-		final List<Integer> ids = dto.getAnimals();
+		final List<String> ids = dto.getAnimals();
 		if (ids != null && !ids.isEmpty()) {
 			ids.forEach(id -> {
-				final Animal a = animalDao.findOne(id);
+				final Integer mapped = Integer.parseInt(id); 
+				final Animal a = animalDao.findOne(mapped);
 				animals.add(a);
 			});
 		}

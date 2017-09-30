@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pal.farm.dao.UserDAO;
+import com.pal.farm.exception.AssociationNotPermittedException;
+import com.pal.farm.model.Animal;
 import com.pal.farm.model.User;
 
 
@@ -20,7 +22,16 @@ public class UserServiceImpl implements UserService {
 	private UserDAO userDao;
 
 	@Override
-	public User create(User u) {
+	public User create(User u) throws AssociationNotPermittedException{
+		List<Animal> animals = u.getAnimals();
+		animals.forEach(a -> {
+			if (a.getUser() == null) {
+				a.setUser(u);
+			} 
+			else {
+				throw new AssociationNotPermittedException("Animal no disponible para compra");
+			}
+		});
 		return userDao.save(u);
 	}
 

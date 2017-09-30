@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pal.farm.dto.ChickenDTO;
+import com.pal.farm.dto.ProductionDTO;
 import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.mapper.ChickenMapperService;
+import com.pal.farm.mapper.ProductionMapperService;
 import com.pal.farm.model.Chicken;
 import com.pal.farm.service.ChickenService;
 
@@ -34,6 +36,9 @@ public class ChickenControllerImpl implements ChickenController {
 	
 	@Autowired
 	private ChickenMapperService chickenMapper;
+	
+	@Autowired
+	private ProductionMapperService productionMapper;
 
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
@@ -85,6 +90,20 @@ public class ChickenControllerImpl implements ChickenController {
 			throw new NotFound();
 		}
 		return chickenMapper.toDTO(c);
+		
+	}
+	
+	@Override
+	@RequestMapping(value = "/{id}/productions", method = RequestMethod.GET)
+	public List<ProductionDTO> findAnimalProductionById(@PathVariable("id") Integer id) throws NotFound {
+		final Chicken c = chickenService.findById(id);
+		if (c != null && c.getProductions() != null) {
+			final List<ProductionDTO> productions = new ArrayList<>();
+			c.getProductions().forEach( p -> productions.add(productionMapper.toDTO(p)) );
+			return productions;
+		}
+
+		throw new NotFound();
 		
 	}
 	

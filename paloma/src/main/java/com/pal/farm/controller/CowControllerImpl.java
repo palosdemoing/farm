@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pal.farm.dto.CowDTO;
+import com.pal.farm.dto.ProductionDTO;
 import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.mapper.CowMapperService;
+import com.pal.farm.mapper.ProductionMapperService;
 import com.pal.farm.model.Cow;
 import com.pal.farm.service.CowService;
 
@@ -32,6 +34,9 @@ public class CowControllerImpl implements CowController {
 	
 	@Autowired
 	private CowMapperService cowMapper;
+	
+	@Autowired
+	private ProductionMapperService productionMapper;
 
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
@@ -77,6 +82,21 @@ public class CowControllerImpl implements CowController {
 			throw new NotFound();
 		}
 		return cowMapper.toDTO(c);
+		
+	}
+
+	
+	@Override
+	@RequestMapping(value = "/{id}/productions", method = RequestMethod.GET)
+	public List<ProductionDTO> findAnimalProductionById(@PathVariable("id") Integer id) throws NotFound {
+		final Cow c = cowService.findById(id);
+		if (c != null && c.getProductions() != null) {
+			final List<ProductionDTO> productions = new ArrayList<>();
+			c.getProductions().forEach( p -> productions.add(productionMapper.toDTO(p)) );
+			return productions;
+		}
+
+		throw new NotFound();
 		
 	}
 	

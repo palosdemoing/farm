@@ -4,6 +4,7 @@ package com.pal.farm.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -11,43 +12,75 @@ import org.springframework.stereotype.Service;
 
 import com.pal.farm.dao.UserDAO;
 import com.pal.farm.exception.AssociationNotPermittedException;
+import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.model.Animal;
 import com.pal.farm.model.User;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDAO userDao;
 
+	@Autowired
+	private AnimalService animalService;
+
 	@Override
-	public User create(User u) throws AssociationNotPermittedException{
+	public User create(User u) throws NotFound, AssociationNotPermittedException {
 		List<Animal> animals = u.getAnimals();
-		animals.forEach(a -> {
-			if (a.getUser() == null) {
-				a.setUser(u);
-			} 
-			else {
-				throw new AssociationNotPermittedException("Animal no disponible para compra");
+		if (animals != null) {
+			log.info("animals not null: " + animals);
+			if (checkAnimals(animals) > 0) {
+				throw new AssociationNotPermittedException("Algun animal tiene propietario");
 			}
-		});
-		return userDao.save(u);
+			userDao.save(u);
+			animals.forEach(a -> {
+				a.setUser(u);
+				animalService.update(a);
+				u.getAnimals().add(a);
+			});				
+		}
+//		userDao.save(u);
+		
+		return u;
 	}
 
 	@Override
-	public void delete(User u) {
+	public void delete(User u) throws InvalidRequestException {
 		userDao.delete(u);
 	}
 
 	@Override
-	public void update(User u) {
-// get user, recorrer valores para no eliminar los que recibidos como null
-		userDao.save(u);
+	public void update(User u) throws NotFound, AssociationNotPermittedException {		
+		final User current = findById(u.getIdUser());
+		if (current == null) {
+			throw new NotFound();
+		}
+		if (u.getUsername() != null) {
+			current.setUsername(u.getUsername());
+		}
+		List<Animal> animals = u.getAnimals();
+		if (animals != null) {
+			if (checkAnimals(animals) > 0) {
+				throw new AssociationNotPermittedException("Algun animal tiene propietario");
+			}
+			animals.forEach(a -> {
+				a.setUser(u);
+				current.getAnimals().add(a);
+			});				
+		}
+
+		userDao.save(current);
 	}
 
 	@Override
-	public List<User> getAll(Pageable pageable) {
+	public List<User> getAll(Pageable pageable) throws CannotProceed {
+		if (pageable.getPageSize() > 10) {
+			throw new CannotProceed();
+		}
 		final List<User> users = new ArrayList<>();
 		userDao.findAll(pageable).forEach(u -> users.add(u) );
 		return users;
@@ -63,14 +96,19 @@ public class UserServiceImpl implements UserService {
 		return userDao.findUserByUsername(name);
 	}
 
-//	@Override
-//	public List<User> earnsByUser(Integer id) {
-//		List<User> users = new ArrayList<>();
-//		if (userDao.findOne(id) != null) {
-////			users = userDao.findUserWherePriceXXXXXXXXXXXX(id);
-//			return users;
-//		}
-//		return users;
-//	}
+	
+	
+	private Integer checkAnimals(List<Animal> animals) {
+		Integer count = -1;
+		if (animals != null) {
+			count = animals.size();
+			for (Animal a : animals) {
+				if (a.getUser() == null) {
+					count--;
+				}
+			}
+		}
+		return count;
+	}
 
 }

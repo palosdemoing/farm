@@ -9,13 +9,14 @@ import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.data.domain.Pageable;
 
 import com.pal.farm.exception.AssociationNotPermittedException;
+import com.pal.farm.exception.InvalidRequestException;
 
 
 public interface CRUDService<T, ID extends Serializable> {
 
-	T create(T t) throws AssociationNotPermittedException;
+	T create(T t) throws NotFound, AssociationNotPermittedException;
 
-	void delete(T t) throws CannotProceed;
+	void delete(T t) throws InvalidRequestException;
 
 	void update(T t) throws NotFound, AssociationNotPermittedException;
 

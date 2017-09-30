@@ -25,8 +25,7 @@ public class CowMapperServiceImpl implements CowMapperService {
 	
 	@Override
 	public CowDTO toDTO(Cow c) {
-		final CowDTO dto;
-		dto = mapper.map(c, CowDTO.class);
+		final CowDTO dto = mapper.map(c, CowDTO.class);
 		
 		final List<Integer> productions = new ArrayList<Integer>();
 		c.getProductions().forEach(p -> productions.add(p.getIdProduction()));
@@ -38,11 +37,16 @@ public class CowMapperServiceImpl implements CowMapperService {
 
 	@Override
 	public Cow toModel(CowDTO dto) {
-		final Cow c;
-		c = mapper.map(dto, Cow.class);
+		final Cow c = mapper.map(dto, Cow.class);
 		
-		final List<Production> productions = new ArrayList<Production>();
-		dto.getProductions().forEach(id -> productions.add(productionDao.findOne(id)));
+		final List<Production> productions = new ArrayList<Production>();	
+		final List<Integer> ids = dto.getProductions();
+		if (ids != null && !ids.isEmpty()) {
+			ids.forEach(id -> {
+				final Production p = productionDao.findOne(id);
+				productions.add(p);
+			});
+		}
 		
 		c.setProductions(productions);
 		return c;

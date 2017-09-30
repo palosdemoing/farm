@@ -72,7 +72,7 @@ public class UserControllerImpl implements UserController {
 	public UserDTO findById(@PathVariable("id") Integer id) throws NotFound {
 		
 		final User u = userService.findById(id);
-		if (u.getIdUser() == null) {
+		if (u == null) {
 			throw new NotFound();
 		}
 		return userMapper.toDTO(u);
@@ -84,7 +84,7 @@ public class UserControllerImpl implements UserController {
 	public UserDTO findByUsername(@PathVariable("name") String name) throws NotFound {
 		
 		final User u = userService.findByUsername(name);
-		if (u.getIdUser() == null) {
+		if (u == null) {
 			throw new NotFound();
 		}
 		return userMapper.toDTO(u);

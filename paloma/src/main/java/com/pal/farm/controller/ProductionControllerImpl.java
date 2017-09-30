@@ -72,7 +72,7 @@ public class ProductionControllerImpl implements ProductionController {
 	public ProductionDTO findById(@PathVariable("id") Integer id) throws NotFound {
 		
 		final Production p = productionService.findById(id);
-		if (p.getIdProduction() == null) {
+		if (p == null) {
 			throw new NotFound();
 		}
 		return productionMapper.toDTO(p);

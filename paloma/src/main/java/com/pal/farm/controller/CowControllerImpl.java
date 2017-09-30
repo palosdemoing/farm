@@ -71,7 +71,7 @@ public class CowControllerImpl implements CowController {
 	public CowDTO findById(@PathVariable("id") Integer id) throws NotFound {
 		
 		final Cow c = cowService.findById(id);
-		if (c.getIdAnimal() == null) {
+		if (c == null) {
 			throw new NotFound();
 		}
 		return cowMapper.toDTO(c);

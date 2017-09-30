@@ -20,7 +20,9 @@ import com.pal.farm.mapper.ChickenMapperService;
 import com.pal.farm.model.Chicken;
 import com.pal.farm.service.ChickenService;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/chicken")
 public class ChickenControllerImpl implements ChickenController { 
@@ -35,6 +37,7 @@ public class ChickenControllerImpl implements ChickenController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ChickenDTO create(@RequestBody ChickenDTO t) {
 		Chicken c = chickenMapper.toModel(t);
+		log.info("creando: " + c);
 		c = chickenService.create(c);
 		return chickenMapper.toDTO(c);
 	}
@@ -43,6 +46,7 @@ public class ChickenControllerImpl implements ChickenController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws CannotProceed {
 		final Chicken c = chickenMapper.toModel(t);
+		log.info("borrando: " + c);
 		c.setIdAnimal(id);
 		chickenService.delete(c);
 	}
@@ -52,6 +56,7 @@ public class ChickenControllerImpl implements ChickenController {
 	public void update(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws NotFound {
 		final Chicken c = chickenMapper.toModel(t);
 		c.setIdAnimal(id);
+		log.info("actualizando: " + c);
 		chickenService.update(c);
 	}
 
@@ -62,6 +67,7 @@ public class ChickenControllerImpl implements ChickenController {
 		
 		final List<ChickenDTO> chickens = new ArrayList<>();
 		chickenService.getAll( new PageRequest(page + 1, size) ).forEach(c -> chickens.add(chickenMapper.toDTO(c)) );
+		log.info("listando: " + chickens);
 		return chickens;
 		
 	}
@@ -71,7 +77,8 @@ public class ChickenControllerImpl implements ChickenController {
 	public ChickenDTO findById(@PathVariable("id") Integer id) throws NotFound {
 		
 		final Chicken c = chickenService.findById(id);
-		if (c.getIdAnimal() == null) {
+		log.info("buscando: " + c);
+		if (c == null) {
 			throw new NotFound();
 		}
 		return chickenMapper.toDTO(c);

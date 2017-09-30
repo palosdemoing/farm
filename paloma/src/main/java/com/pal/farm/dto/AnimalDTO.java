@@ -12,12 +12,14 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Data
-public class UserDTO implements Serializable {
+public class AnimalDTO implements Serializable {
 
-	private static final long serialVersionUID = 5120766028716904643L;
+	private static final long serialVersionUID = 8267429937399245784L;
 
-	private String username;
+	private String type;
 
-	private List<Integer> animals;
+	private String frecuency;
+	
+	private List<Integer> productions;
 
 }

@@ -16,7 +16,7 @@ import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.model.Animal;
 import com.pal.farm.model.User;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.*;
 
 @Slf4j
 @Service
@@ -31,19 +31,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User create(User u) throws NotFound, AssociationNotPermittedException {
 		List<Animal> animals = u.getAnimals();
-		if (animals != null) {
-			log.info("animals not null: " + animals);
+		u.setAnimals(new ArrayList<>());
+		userDao.save(u);
+		
+		if (!animals.isEmpty()) {
 			if (checkAnimals(animals) > 0) {
 				throw new AssociationNotPermittedException("Algun animal tiene propietario");
 			}
-			userDao.save(u);
 			animals.forEach(a -> {
 				a.setUser(u);
 				animalService.update(a);
 				u.getAnimals().add(a);
-			});				
+			});
+			userDao.save(u);	
 		}
-//		userDao.save(u);
 		
 		return u;
 	}
@@ -63,7 +64,7 @@ public class UserServiceImpl implements UserService {
 			current.setUsername(u.getUsername());
 		}
 		List<Animal> animals = u.getAnimals();
-		if (animals != null) {
+		if (animals != null && !animals.isEmpty()) {
 			if (checkAnimals(animals) > 0) {
 				throw new AssociationNotPermittedException("Algun animal tiene propietario");
 			}
@@ -73,7 +74,7 @@ public class UserServiceImpl implements UserService {
 			});				
 		}
 
-		userDao.save(current);
+//		userDao.save(current);
 	}
 
 	@Override
@@ -105,6 +106,7 @@ public class UserServiceImpl implements UserService {
 			for (Animal a : animals) {
 				if (a.getUser() == null) {
 					count--;
+					log.info("pasando por count--");
 				}
 			}
 		}

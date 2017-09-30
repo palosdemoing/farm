@@ -1,12 +1,7 @@
 package com.pal.farm.model;
 
 
-// https://github.com/netgloo/spring-boot-samples/tree/master/spring-boot-springdatajpa-inheritance/src/main/java/netgloo
-// https://docs.spring.io/spring-data/jpa/docs/current/reference/html/
-// https://www.thoughts-on-java.org/complete-guide-inheritance-strategies-jpa-hibernate/
-
 import java.util.List;
-
 import java.io.Serializable;
 
 import javax.persistence.CascadeType;
@@ -20,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -54,7 +48,6 @@ public abstract class Animal implements Serializable {
 	private User user;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//	@JoinColumn(name = "ANIMAL")
 	private List<Production> productions;
 	
 }

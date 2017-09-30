@@ -54,18 +54,21 @@ public class UserControllerImpl implements UserController {
 	@Override
 	@RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
 	public void delete(@RequestBody UserDTO t, @PathParam("username") String username) throws NotFound, InvalidRequestException {
-		final User u = userMapper.toModel(t);
-		u.setIdUser(userService.findByUsername(username).getIdUser());
-		if (u.getIdUser() == null) {
+		if (userService.findByUsername(username) == null) {
 			throw new NotFound();
 		}
+		final User u = userMapper.toModel(t);
+		u.setIdUser(userService.findByUsername(username).getIdUser());
 		userService.delete(u);
 	}
 
 	@Override
 	@RequestMapping(value = "/{username}", method = RequestMethod.PUT)
 	public void update(@RequestBody UserDTO t, @PathParam("username") String username) throws NotFound, AssociationNotPermittedException {
-		User u = userMapper.toModel(t);
+		if (userService.findByUsername(username) == null) {
+			throw new NotFound();
+		}
+		final User u = userMapper.toModel(t);
 		u.setIdUser(userService.findByUsername(username).getIdUser());
 		userService.update(u);
 	}

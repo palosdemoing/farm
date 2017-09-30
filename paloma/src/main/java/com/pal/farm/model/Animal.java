@@ -20,6 +20,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -39,7 +40,7 @@ public abstract class Animal implements Serializable {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "ID_ANIMAL", updatable = false, nullable = false)
+    @Column(name = "ID_ANIMAL", updatable = false)
 	protected Integer idAnimal;
 
 	@Column(name="TYPE")
@@ -52,12 +53,7 @@ public abstract class Animal implements Serializable {
 	private User user;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "ANIMAL")
 	private List<Production> productions;
-	
-	
-//	public Animal(String type, String frecuency) {
-//		this.setType(type);
-//		this.setFrecuency(frecuency);
-//	}
 	
 }

@@ -39,7 +39,6 @@ public class User implements Serializable {
 	private String username;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "USER")
 	private List<Animal> animals;
 
 }

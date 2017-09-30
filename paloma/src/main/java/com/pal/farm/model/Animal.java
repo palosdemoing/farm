@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -49,11 +50,11 @@ public abstract class Animal implements Serializable {
 	@Column(name="FRECUENCY")
 	private String frecuency;
 
-	@Column(name="USER")
+	@ManyToOne
 	private User user;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "ANIMAL")
+//	@JoinColumn(name = "ANIMAL")
 	private List<Production> productions;
 	
 }

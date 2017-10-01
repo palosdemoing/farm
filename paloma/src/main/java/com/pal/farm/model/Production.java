@@ -17,6 +17,8 @@ import javax.persistence.TemporalType;
 
 import javax.validation.constraints.NotNull;
 
+import org.dozer.Mapping;
+
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -52,5 +54,10 @@ public class Production implements Serializable {
 
 	@ManyToOne
 	private Animal animal;
+	
+	@Mapping("animal")
+	public Integer getIdAnimal() {
+	    return this.animal.getIdAnimal();
+	}
 	
 }

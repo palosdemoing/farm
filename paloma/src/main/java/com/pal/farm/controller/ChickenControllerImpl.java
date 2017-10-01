@@ -43,7 +43,7 @@ public class ChickenControllerImpl implements ChickenController {
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
 	public ChickenDTO create(@RequestBody ChickenDTO t) throws NotFound, AssociationNotPermittedException {
-		Chicken c = chickenMapper.toModel(t);
+		Chicken c = chickenMapper.toModel(t, null);
 		log.info("creando: " + c);
 		c = chickenService.create(c);
 		return chickenMapper.toDTO(c);
@@ -52,7 +52,7 @@ public class ChickenControllerImpl implements ChickenController {
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws InvalidRequestException {
-		final Chicken c = chickenMapper.toModel(t);
+		final Chicken c = chickenMapper.toModel(t, id);
 		log.info("borrando: " + c);
 		c.setIdAnimal(id);
 		chickenService.delete(c);
@@ -61,7 +61,7 @@ public class ChickenControllerImpl implements ChickenController {
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void update(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws NotFound, AssociationNotPermittedException {
-		final Chicken c = chickenMapper.toModel(t);
+		final Chicken c = chickenMapper.toModel(t, id);
 		c.setIdAnimal(id);
 		log.info("actualizando: " + c);
 		chickenService.update(c);

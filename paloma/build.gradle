@@ -29,7 +29,6 @@ test {
 	
 dependencies {
 	compile group: 'org.projectlombok', name: 'lombok', version: '1.16.18'
-	compile group: 'net.sf.dozer', name: 'dozer', version: '5.5.1'
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('com.fasterxml.jackson.core:jackson-annotations:2.9.0')

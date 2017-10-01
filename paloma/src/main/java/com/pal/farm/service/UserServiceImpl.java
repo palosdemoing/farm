@@ -33,14 +33,16 @@ public class UserServiceImpl implements UserService {
 		List<Animal> animals = u.getAnimals();
 		u.setAnimals(new ArrayList<>());
 		userDao.save(u);
+		log.info("Guardo user" + u);
+		log.info("lista de animals" + animals);
 		
 		if (!animals.isEmpty()) {
 			if (checkAnimals(animals) > 0) {
 				throw new AssociationNotPermittedException("Algun animal tiene propietario");
 			}
 			animals.forEach(a -> {
-				a.setUser(u);
-				animalService.update(a);
+//				a.setUser(u);
+//				animalService.update(a);
 				u.getAnimals().add(a);
 			});
 			userDao.save(u);	

@@ -41,7 +41,7 @@ public class CowControllerImpl implements CowController {
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
 	public CowDTO create(@RequestBody CowDTO t) throws NotFound, AssociationNotPermittedException {
-		Cow c = cowMapper.toModel(t);
+		Cow c = cowMapper.toModel(t, null);
 		c = cowService.create(c);
 		return cowMapper.toDTO(c);
 	}
@@ -49,16 +49,14 @@ public class CowControllerImpl implements CowController {
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@RequestBody CowDTO t, @PathVariable("id") Integer id) throws NotFound, InvalidRequestException {
-		final Cow c = cowMapper.toModel(t);
-		c.setIdAnimal(id);
+		final Cow c = cowMapper.toModel(t, id);
 		cowService.delete(c);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void update(@RequestBody CowDTO t, @PathVariable("id") Integer id) throws NotFound, AssociationNotPermittedException {
-		final Cow c = cowMapper.toModel(t);
-		c.setIdAnimal(id);
+		final Cow c = cowMapper.toModel(t, id);
 		cowService.update(c);
 	}
 

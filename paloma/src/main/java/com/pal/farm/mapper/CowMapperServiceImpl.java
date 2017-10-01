@@ -4,7 +4,6 @@ package com.pal.farm.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,41 +13,46 @@ import com.pal.farm.model.Cow;
 import com.pal.farm.model.Production;
 
 
+//crear abstrac class para los herederos de Animal
+
 @Service
 public class CowMapperServiceImpl implements CowMapperService {
 
-	@Autowired 
-	private DozerBeanMapper mapper;
-
-	@Autowired 
+	@Autowired
 	private ProductionDAO productionDao;
-	
+
 	@Override
 	public CowDTO toDTO(Cow c) {
-		final CowDTO dto = mapper.map(c, CowDTO.class);
+		final CowDTO dto = new CowDTO();
 		
+
 		final List<Integer> productions = new ArrayList<Integer>();
 		c.getProductions().forEach(p -> productions.add(p.getIdProduction()));
-		
+
 		dto.setProductions(productions);
-		
-		return dto; 
+
+		return dto;
 	}
 
 	@Override
-	public Cow toModel(CowDTO dto) {
-		final Cow c = mapper.map(dto, Cow.class);
-		
-		final List<Production> productions = new ArrayList<Production>();	
+	public Cow toModel(CowDTO dto, Integer id) {
+		final Cow c = new Cow();
+		c.setIdAnimal(id);
+		c.setType(dto.getType());
+		c.setFrecuency(dto.getFrecuency());
+
+		final List<Production> productions = new ArrayList<Production>();
 		final List<Integer> ids = dto.getProductions();
 		if (ids != null && !ids.isEmpty()) {
-			ids.forEach(id -> {
-				final Production p = productionDao.findOne(id);
-				productions.add(p);
+			ids.forEach(i -> {
+				final Production p = productionDao.findOne(i);
+				if (p != null) {
+					productions.add(p);
+				}
 			});
 		}
-		
 		c.setProductions(productions);
+		
 		return c;
 	}
 }

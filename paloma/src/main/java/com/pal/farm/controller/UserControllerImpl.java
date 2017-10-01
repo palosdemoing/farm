@@ -46,7 +46,7 @@ public class UserControllerImpl implements UserController {
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
 	public UserDTO create(@RequestBody UserDTO t) throws NotFound, AssociationNotPermittedException {
-		User u = userMapper.toModel(t);
+		User u = userMapper.toModel(t, null);
 		u = userService.create(u);
 		return userMapper.toDTO(u);
 	}
@@ -57,8 +57,7 @@ public class UserControllerImpl implements UserController {
 		if (userService.findByUsername(username) == null) {
 			throw new NotFound();
 		}
-		final User u = userMapper.toModel(t);
-		u.setIdUser(userService.findByUsername(username).getIdUser());
+		final User u = userMapper.toModel(t, username);
 		userService.delete(u);
 	}
 
@@ -68,8 +67,7 @@ public class UserControllerImpl implements UserController {
 		if (userService.findByUsername(username) == null) {
 			throw new NotFound();
 		}
-		final User u = userMapper.toModel(t);
-		u.setIdUser(userService.findByUsername(username).getIdUser());
+		final User u = userMapper.toModel(t, username);
 		userService.update(u);
 	}
 

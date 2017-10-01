@@ -36,7 +36,7 @@ public class ProductionControllerImpl implements ProductionController {
 	@Override
 	@RequestMapping(method = RequestMethod.POST)
 	public ProductionDTO create(@RequestBody ProductionDTO t) throws NotFound, AssociationNotPermittedException {
-		Production p = productionMapper.toModel(t);
+		Production p = productionMapper.toModel(t, null);
 		p = productionService.create(p);
 		return productionMapper.toDTO(p);
 	}
@@ -45,16 +45,14 @@ public class ProductionControllerImpl implements ProductionController {
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	public void delete(@RequestBody ProductionDTO t, @PathVariable("id") Integer id) throws InvalidRequestException {
-		final Production p = productionMapper.toModel(t);
-		p.setIdProduction(id);
+		final Production p = productionMapper.toModel(t, id);
 		productionService.delete(p);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public void update(@RequestBody ProductionDTO t, @PathVariable("id") Integer id) throws NotFound, AssociationNotPermittedException {
-		Production p = productionMapper.toModel(t);
-		p.setIdProduction(id);
+		Production p = productionMapper.toModel(t, id);
 		productionService.update(p);
 	}
 

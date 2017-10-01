@@ -16,7 +16,9 @@ import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.model.Cow;
 import com.pal.farm.model.Production;
 
+import lombok.extern.slf4j.*;
 
+@Slf4j
 @Service
 public class CowServiceImpl implements CowService {
 
@@ -29,8 +31,11 @@ public class CowServiceImpl implements CowService {
 	@Override
 	public Cow create(Cow c) throws NotFound, AssociationNotPermittedException {
 		List<Production> productions = c.getProductions();
+		c.setProductions(new ArrayList<>());
 		if (productions != null && !productions.isEmpty()) {
+			log.info("create sin prods " + c);
 			cowDao.save(c);
+			log.info("create prods " + productions);
 			animalService.setProductions(c, productions);
 		}
 		return cowDao.save(c);

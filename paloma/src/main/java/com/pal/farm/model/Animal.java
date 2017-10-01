@@ -1,6 +1,7 @@
 package com.pal.farm.model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 
@@ -18,6 +19,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.dozer.Mapping;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -49,5 +52,5 @@ public abstract class Animal implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Production> productions;
-	
+
 }

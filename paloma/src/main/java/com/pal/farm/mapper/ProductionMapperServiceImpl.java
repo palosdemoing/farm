@@ -1,7 +1,6 @@
 package com.pal.farm.mapper;
 
 
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,9 +16,6 @@ import com.pal.farm.model.Production;
 public class ProductionMapperServiceImpl implements ProductionMapperService {
 
 	@Autowired 
-	public DozerBeanMapper mapper;
-
-	@Autowired 
 	public ProductionDAO productionDao;
 
 	@Autowired 
@@ -29,16 +25,19 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 	
 	@Override
 	public ProductionDTO toDTO(Production p) {
-		final ProductionDTO dto = mapper.map(p, ProductionDTO.class);
-		if (p.getAnimal() != null) {
-			dto.setAnimal(p.getAnimal().getIdAnimal());
-		}
+		final ProductionDTO dto = new ProductionDTO();
+		dto.setProductionDate(p.getProductionDate());
+		dto.setState(p.getState());
+		dto.setOfferPrice(p.getOfferPrice());
+		dto.setCostPrice(p.getCostPrice());
+		dto.setAnimal(p.getAnimal().getIdAnimal());
 		return dto; 
 	}
 
 	@Override
-	public Production toModel(ProductionDTO dto) {
-		final Production p = mapper.map(dto, Production.class);
+	public Production toModel(ProductionDTO dto, Integer id) {
+		final Production p = new Production();
+		
 		Animal a = null;
 		if (dto.getAnimal() != null) {
 			a = animalDao.findOne(dto.getAnimal());
@@ -46,6 +45,12 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 		if (a != null) {
 			p.setAnimal(a);
 		}
+		
+		p.setIdProduction(id);
+		p.setProductionDate(dto.getProductionDate());
+		p.setState(dto.getState());
+		p.setOfferPrice(dto.getOfferPrice());
+		p.setCostPrice(dto.getCostPrice());
 		return p;
 	}
 

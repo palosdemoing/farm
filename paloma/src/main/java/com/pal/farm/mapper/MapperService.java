@@ -1,10 +1,10 @@
 package com.pal.farm.mapper;
 
 
-public interface MapperService<M, DTO> {
+public interface MapperService<M, DTO, ID> {
 	
-	DTO toDTO(M m, Class<? extends DTO> dto);
+	DTO toDTO(M m);
 
-	M toModel(DTO dto, Class<? extends M> m);
+	M toModel(DTO dto, ID id);
 
 }

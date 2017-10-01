@@ -1,52 +1,37 @@
 package com.pal.farm.mapper;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pal.farm.dao.ProductionDAO;
 import com.pal.farm.dto.AnimalDTO;
 import com.pal.farm.model.Animal;
-import com.pal.farm.model.Production;
+import com.pal.farm.model.Chicken;
+import com.pal.farm.model.Cow;
 
 @Service
 public class AnimalMapperServiceImpl implements AnimalMapperService {
 
 	@Autowired
-	private DozerBeanMapper mapper;
+	private ChickenMapperService chickenMapper;
 
 	@Autowired
-	private ProductionDAO productionDao;
+	private CowMapperService cowMapper;
+
 
 	@Override
 	public AnimalDTO toDTO(Animal a) {
-		final AnimalDTO dto = mapper.map(a, AnimalDTO.class);
-
-		final List<Integer> productions = new ArrayList<Integer>();
-		a.getProductions().forEach(p -> productions.add(p.getIdProduction()));
-
-		dto.setProductions(productions);
-
-		return dto;
+		if (a.getClass() == Chicken.class) {
+			return chickenMapper.toDTO((Chicken) a);
+		}
+		if (a.getClass() == Cow.class) {
+			return cowMapper.toDTO((Cow) a);
+		}
+		return new AnimalDTO();
 	}
 
 	@Override
-	public Animal toModel(AnimalDTO dto) {
-		final Animal a = mapper.map(dto, Animal.class);
-
-		final List<Production> productions = new ArrayList<Production>();
-		final List<Integer> ids = dto.getProductions();
-		if (ids != null && !ids.isEmpty()) {
-			ids.forEach(id -> {
-				final Production p = productionDao.findOne(id);
-				productions.add(p);
-			});
-		}
-
-		a.setProductions(productions);
-		return a;
+	public Animal toModel(AnimalDTO dto, Integer id) {
+		return null;
 	}
 }

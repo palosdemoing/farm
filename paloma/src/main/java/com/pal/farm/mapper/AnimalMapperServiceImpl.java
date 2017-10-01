@@ -3,7 +3,6 @@ package com.pal.farm.mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pal.farm.dao.ProductionDAO;
 import com.pal.farm.dto.AnimalDTO;
 import com.pal.farm.model.Animal;
 import com.pal.farm.model.Chicken;
@@ -32,6 +31,7 @@ public class AnimalMapperServiceImpl implements AnimalMapperService {
 
 	@Override
 	public Animal toModel(AnimalDTO dto, Integer id) {
+		// no instanciable directamente
 		return null;
 	}
 }

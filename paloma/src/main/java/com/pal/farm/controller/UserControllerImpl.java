@@ -53,7 +53,7 @@ public class UserControllerImpl implements UserController {
 
 	@Override
 	@RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody UserDTO t, @PathParam("username") String username) throws NotFound, InvalidRequestException {
+	public void delete(@RequestBody UserDTO t, @PathParam("username") String username) throws NotFound, InvalidRequestException, AssociationNotPermittedException {
 		if (userService.findByUsername(username) == null) {
 			throw new NotFound();
 		}

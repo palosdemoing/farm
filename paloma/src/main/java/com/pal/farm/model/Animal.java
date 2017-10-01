@@ -46,9 +46,10 @@ public abstract class Animal implements Serializable {
 	private String frecuency;
 
 	@ManyToOne
+	@JoinColumn(name = "id_user")
 	private User user;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = false)
 	@JoinColumn(name = "id_animal")
 	private List<Production> productions;
 

@@ -51,7 +51,7 @@ public class ChickenControllerImpl implements ChickenController {
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws NotFound, InvalidRequestException {
+	public void delete(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws NotFound, InvalidRequestException, AssociationNotPermittedException {
 		final Chicken c = chickenMapper.toModel(t, id);
 		c.setIdAnimal(id);
 		chickenService.delete(c);

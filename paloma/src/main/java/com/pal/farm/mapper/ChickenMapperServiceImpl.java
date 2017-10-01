@@ -3,11 +3,13 @@ package com.pal.farm.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pal.farm.dao.ProductionDAO;
 import com.pal.farm.dto.ChickenDTO;
+import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.model.Chicken;
 import com.pal.farm.model.Production;
 
@@ -35,21 +37,24 @@ public class ChickenMapperServiceImpl implements ChickenMapperService {
 	}
 
 	@Override
-	public Chicken toModel(ChickenDTO dto, Integer id) {
+	public Chicken toModel(ChickenDTO dto, Integer id) throws NotFound, AssociationNotPermittedException {
 		final Chicken c = new Chicken();
 		c.setIdAnimal(id);
 		c.setType(dto.getType());
 		c.setFrecuency(dto.getFrecuency());
 
 		final List<Production> productions = new ArrayList<Production>();
-		final List<Integer> ids = dto.getProductions();
-		if (ids != null && !ids.isEmpty()) {
-			ids.forEach(i -> {
+		if (dto.getProductions() != null && !dto.getProductions().isEmpty()) {
+			for(Integer i : dto.getProductions()) {
 				final Production p = productionDao.findOne(i);
-				if (p != null) {
-					productions.add(p);
+				if (p == null) {
+					throw new NotFound();
+				} 
+				else if (p.getAnimal() != null) {
+					throw new AssociationNotPermittedException("Alguna producción ya ha sido asignada");
 				}
-			});
+				productions.add(p);
+			}
 		}
 		c.setProductions(productions);
 		

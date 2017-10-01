@@ -14,9 +14,9 @@ import com.pal.farm.dao.CowDAO;
 import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.model.Cow;
-import com.pal.farm.model.Production;
 
 import lombok.extern.slf4j.*;
+
 
 @Slf4j
 @Service
@@ -30,23 +30,7 @@ public class CowServiceImpl implements CowService {
 
 	@Override
 	public Cow create(Cow c) throws NotFound, AssociationNotPermittedException {
-		List<Production> productions = c.getProductions();
-		
-		if (!c.getProductions().isEmpty()) {
-			if (productionService.checkProductions(c.getProductions()) > 0 ){
-			}
-//			productions.forEach(p -> {
-//				p.setAnimal(c);
-//			});	
-//			log.info("create con prods " + c);
-			cowDao.save(c);
-		}
-		else {
-			cowDao.save(c);
-		}
-		return c;
-
-		
+		return cowDao.save(c);
 	}
 
 	@Override
@@ -64,9 +48,8 @@ public class CowServiceImpl implements CowService {
 		if (c.getFrecuency() != null) {
 			current.setFrecuency(c.getFrecuency());
 		}
-		List<Production> productions = c.getProductions();
-		if (productions != null && !productions.isEmpty()) {
-//			animalService.setProductions(current, productions);
+		if (c.getProductions() != null && !c.getProductions().isEmpty()) {
+			current.setProductions(c.getProductions());
 		}
 		cowDao.save(current);
 	}

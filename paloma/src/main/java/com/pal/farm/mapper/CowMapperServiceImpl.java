@@ -44,9 +44,8 @@ public class CowMapperServiceImpl implements CowMapperService {
 		c.setFrecuency(dto.getFrecuency());
 
 		final List<Production> productions = new ArrayList<Production>();
-		final List<Integer> ids = dto.getProductions();
-		if (ids != null && !ids.isEmpty()) {
-			for(Integer i : ids) {
+		if (dto.getProductions() != null && !dto.getProductions().isEmpty()) {
+			for(Integer i : dto.getProductions()) {
 				final Production p = productionDao.findOne(i);
 				if (p == null) {
 					throw new NotFound();

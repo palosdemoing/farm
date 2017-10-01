@@ -23,18 +23,10 @@ import lombok.extern.slf4j.*;
 public class ChickenServiceImpl implements ChickenService {
 
 	@Autowired
-	private AnimalService animalService;
-
-	@Autowired
 	private ChickenDAO chickenDao;
 
 	@Override
 	public Chicken create(Chicken c) throws NotFound, AssociationNotPermittedException {
-		List<Production> productions = c.getProductions();
-		c.setProductions(new ArrayList<>());
-		if ( productions != null && !productions.isEmpty()) {
-//			animalService.setProductions(c, productions);
-		}
 		return chickenDao.save(c);
 	}
 
@@ -53,9 +45,8 @@ public class ChickenServiceImpl implements ChickenService {
 		if (c.getFrecuency() != null) {
 			current.setFrecuency(c.getFrecuency());
 		}
-		List<Production> productions = c.getProductions();
-		if (productions != null && !productions.isEmpty()) {
-//			animalService.setProductions(current, productions);
+		if (c.getProductions() != null && !c.getProductions().isEmpty()) {
+			c.setProductions(c.getProductions());
 		}
 		chickenDao.save(current);
 	}

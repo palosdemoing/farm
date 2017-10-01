@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.pal.farm.dao.UserDAO;
 import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
-import com.pal.farm.model.Animal;
 import com.pal.farm.model.User;
 
 import lombok.extern.slf4j.*;
@@ -25,30 +24,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDAO userDao;
 
-	@Autowired
-	private AnimalService animalService;
-
 	@Override
 	public User create(User u) throws NotFound, AssociationNotPermittedException {
-		List<Animal> animals = u.getAnimals();
-		u.setAnimals(new ArrayList<>());
-		userDao.save(u);
-		log.info("Guardo user" + u);
-		log.info("lista de animals" + animals);
-		
-		if (!animals.isEmpty()) {
-			if (checkAnimals(animals) > 0) {
-				throw new AssociationNotPermittedException("Algun animal tiene propietario");
-			}
-			animals.forEach(a -> {
-//				a.setUser(u);
-//				animalService.update(a);
-				u.getAnimals().add(a);
-			});
-			userDao.save(u);	
-		}
-		
-		return u;
+		return userDao.save(u);
 	}
 
 	@Override
@@ -65,18 +43,7 @@ public class UserServiceImpl implements UserService {
 		if (u.getUsername() != null) {
 			current.setUsername(u.getUsername());
 		}
-		List<Animal> animals = u.getAnimals();
-		if (animals != null && !animals.isEmpty()) {
-			if (checkAnimals(animals) > 0) {
-				throw new AssociationNotPermittedException("Algun animal tiene propietario");
-			}
-			animals.forEach(a -> {
-				a.setUser(u);
-				current.getAnimals().add(a);
-			});				
-		}
-
-//		userDao.save(current);
+		userDao.save(current);
 	}
 
 	@Override
@@ -97,22 +64,6 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findByUsername(String name) throws NotFound {
 		return userDao.findUserByUsername(name);
-	}
-
-	
-	
-	private Integer checkAnimals(List<Animal> animals) {
-		Integer count = -1;
-		if (animals != null) {
-			count = animals.size();
-			for (Animal a : animals) {
-				if (a.getUser() == null) {
-					count--;
-					log.info("pasando por count--");
-				}
-			}
-		}
-		return count;
 	}
 
 }

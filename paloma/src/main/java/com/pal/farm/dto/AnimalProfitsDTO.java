@@ -12,13 +12,9 @@ import lombok.Data;
 public class AnimalProfitsDTO implements Serializable {
 
 	private static final long serialVersionUID = 8920720499595714726L;
-
-	private String user;
-
-	private String animalClass;
 	
 	private String animalType;
 	
-	private String profits;
+	private Double profits;
 
 }

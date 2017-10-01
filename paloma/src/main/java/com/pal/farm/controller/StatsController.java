@@ -13,6 +13,6 @@ public interface StatsController {
 
 	List<AnimalProfitsDTO> profitsByAnimal(Integer n);
 	
-	public List<UserProfitsDTO> profitsByUser(String name) throws NotFound;
+	List<UserProfitsDTO> profitsByUser(String name) throws NotFound;
 
 }

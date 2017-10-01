@@ -8,8 +8,8 @@ import com.pal.farm.dto.UserProfitsDTO;
 
 public interface StatsService {
 
-	List<AnimalProfitsDTO> profitsByAnimal(Integer n);
+	List<AnimalProfitsDTO> profitsByAnimal(); // Integer n);
 
-	List<UserProfitsDTO> profitsByUser(String name, Date startDate, Date endsDate);
+//	List<UserProfitsDTO> profitsByUser(String name, Date startDate, Date endsDate);
 
 }

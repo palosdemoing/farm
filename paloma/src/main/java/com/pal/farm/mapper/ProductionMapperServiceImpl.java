@@ -38,9 +38,9 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 		
 		if (id != null) {
 			Production current = productionDao.findOne(id);
-//			if ( current != null ) {
-//				p.setAnimal(current.getAnimal());
-//			}
+			if ( current != null ) {
+				p.setAnimal(current.getAnimal());
+			}
 		}
 		
 		p.setIdProduction(id);

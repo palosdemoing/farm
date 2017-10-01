@@ -49,5 +49,8 @@ public class Production implements Serializable {
 	@Column(name="OFFER_PRICE", nullable = false)
 	@NotNull
 	private Double offerPrice;
+
+	@ManyToOne
+	private Animal animal;
 	
 }

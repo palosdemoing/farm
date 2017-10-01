@@ -39,17 +39,9 @@ public class CowServiceImpl implements CowService {
 				throw new AssociationNotPermittedException("Alguna producción ya ha sido asignada");
 			}
 			cowDao.save(c);
-			productions.forEach(p -> {
-//			
+//			productions.forEach(p -> {
 //				p.setAnimal(c);
-	//			try {
-	//				productionService.update(p);
-	//			} catch (Exception e) {
-	//				e.printStackTrace();
-	//			}
-//				c.getProductions().add(p);
-	//			
-			});	
+//			});	
 //			log.info("create con prods " + c);
 		}
 		else {

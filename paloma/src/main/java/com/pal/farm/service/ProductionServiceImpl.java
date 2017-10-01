@@ -60,9 +60,9 @@ public class ProductionServiceImpl implements ProductionService {
 			current.setOfferPrice(p.getOfferPrice());
 		}
 		
-//		if ( p.getAnimal() != null ) {
-//			current.setAnimal(p.getAnimal());
-//		}
+		if ( p.getAnimal() != null ) {
+			current.setAnimal(p.getAnimal());
+		}
 
 		productionDao.save(current);
 	}
@@ -94,9 +94,9 @@ public class ProductionServiceImpl implements ProductionService {
 		Integer count = productions.size();
 		log.info("en check prods " + count);
 		for (Production p : productions) {
-//			if (p.getAnimal() == null) {
-//				count--;
-//			}
+			if (p.getAnimal() == null) {
+				count--;
+			}
 		}
 		return count;
 	}

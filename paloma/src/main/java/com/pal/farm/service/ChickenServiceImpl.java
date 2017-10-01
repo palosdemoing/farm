@@ -28,8 +28,10 @@ public class ChickenServiceImpl implements ChickenService {
 	@Override
 	public Chicken create(Chicken c) throws NotFound, AssociationNotPermittedException {
 		List<Production> productions = c.getProductions();
-		if ( productions != null ) {
-			chickenDao.save(c);
+		c.setProductions(new ArrayList<>());
+		chickenDao.save(c);
+		
+		if ( productions != null && !productions.isEmpty()) {
 			animalService.setProductions(c, productions);
 		}
 		return chickenDao.save(c);
@@ -51,7 +53,7 @@ public class ChickenServiceImpl implements ChickenService {
 			current.setFrecuency(c.getFrecuency());
 		}
 		List<Production> productions = c.getProductions();
-		if (productions != null) {
+		if (productions != null && !productions.isEmpty()) {
 			animalService.setProductions(current, productions);
 		}
 		chickenDao.save(current);

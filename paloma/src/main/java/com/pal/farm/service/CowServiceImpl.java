@@ -29,7 +29,7 @@ public class CowServiceImpl implements CowService {
 	@Override
 	public Cow create(Cow c) throws NotFound, AssociationNotPermittedException {
 		List<Production> productions = c.getProductions();
-		if (productions != null) {
+		if (productions != null && !productions.isEmpty()) {
 			cowDao.save(c);
 			animalService.setProductions(c, productions);
 		}
@@ -52,7 +52,7 @@ public class CowServiceImpl implements CowService {
 			current.setFrecuency(c.getFrecuency());
 		}
 		List<Production> productions = c.getProductions();
-		if (productions != null) {
+		if (productions != null && !productions.isEmpty()) {
 			animalService.setProductions(current, productions);
 		}
 		cowDao.save(current);

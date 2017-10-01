@@ -39,10 +39,10 @@ public class UserMapperServiceImpl implements UserMapperService {  // extends Ma
 	@Override
 	public User toModel(UserDTO dto) {
 		final User u = mapper.map(dto, User.class);
+		
 		final List<Animal> animals = new ArrayList<>();
-		final List<Integer> ids = dto.getAnimals();
-		if (ids != null && !ids.isEmpty()) {
-			ids.forEach(id -> {
+		if (dto.getAnimals() != null && !dto.getAnimals().isEmpty()) {
+			dto.getAnimals().forEach(id -> {
 				final Animal a = animalDao.findOne(id);
 				animals.add(a);
 			});

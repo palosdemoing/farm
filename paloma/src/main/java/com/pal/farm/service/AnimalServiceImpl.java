@@ -52,15 +52,11 @@ public class AnimalServiceImpl implements AnimalService {
 			try {
 				productionService.update(p);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} 
-
+			}
 			a.getProductions().add(p);
-		});
-		
+		});		
 	}
-
 
 	@Override
 	public void update(Animal a) {

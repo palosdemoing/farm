@@ -65,7 +65,7 @@ public class ProductionServiceImpl implements ProductionService {
 		productionDao.save(current);
 	}
 	
-	
+
 	
 	@Override
 	public List<Production> getAll(Pageable pageable) throws CannotProceed {
@@ -81,11 +81,6 @@ public class ProductionServiceImpl implements ProductionService {
 	public Production findById(Integer id) {
 		return productionDao.findOne(id);
 	}
-
-//	@Override
-//	public List<Production> productionsBetweenDates(Date startDate, Date endsDate) {
-//		return productionDao.productionsBetweenDates(startDate, endsDate);
-//	}
 
 	@Override
 	public List<Production> productionsByAnimal(Integer idAnimal) {

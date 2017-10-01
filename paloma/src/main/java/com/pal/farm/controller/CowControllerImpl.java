@@ -23,7 +23,6 @@ import com.pal.farm.mapper.CowMapperService;
 import com.pal.farm.mapper.ProductionMapperService;
 import com.pal.farm.model.Cow;
 import com.pal.farm.service.CowService;
-import com.pal.farm.service.CowServiceImpl;
 
 import lombok.extern.slf4j.*;
 
@@ -45,9 +44,7 @@ public class CowControllerImpl implements CowController {
 	@RequestMapping(method = RequestMethod.POST)
 	public CowDTO create(@RequestBody CowDTO t) throws NotFound, AssociationNotPermittedException {
 		Cow c = cowMapper.toModel(t, null);
-		log.info("to model hecho " + c);
 		c = cowService.create(c);
-		log.info("creado " + c);
 		return cowMapper.toDTO(c);
 	}
 
@@ -68,7 +65,7 @@ public class CowControllerImpl implements CowController {
 	@Override
 	@RequestMapping(method=RequestMethod.GET)
 	public List<CowDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="1") Integer page,
-								   @RequestParam(name = "size", required = false, defaultValue="10") Integer size) throws CannotProceed {
+							   @RequestParam(name = "size", required = false, defaultValue="10") Integer size) throws CannotProceed {
 		
 		final List<CowDTO> cows = new ArrayList<>();
 		cowService.getAll( new PageRequest(page - 1, size) ).forEach(c -> cows.add(cowMapper.toDTO(c)) );
@@ -79,13 +76,11 @@ public class CowControllerImpl implements CowController {
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public CowDTO findById(@PathVariable("id") Integer id) throws NotFound {
-		
 		final Cow c = cowService.findById(id);
 		if (c == null) {
 			throw new NotFound();
 		}
 		return cowMapper.toDTO(c);
-		
 	}
 
 	
@@ -98,9 +93,7 @@ public class CowControllerImpl implements CowController {
 			c.getProductions().forEach( p -> productions.add(productionMapper.toDTO(p)) );
 			return productions;
 		}
-
 		throw new NotFound();
-		
 	}
 	
 }

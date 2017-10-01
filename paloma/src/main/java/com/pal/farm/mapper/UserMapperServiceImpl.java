@@ -46,7 +46,7 @@ public class UserMapperServiceImpl implements UserMapperService {
 						throw new NotFound();
 					} 
 					else if (a.getUser() != null) {
-						throw new AssociationNotPermittedException("Algún animal ya ha sido asignada");
+						throw new AssociationNotPermittedException("Algún animal ya ha sido asignado");
 					}
 					animals.add(a);
 				}
@@ -56,8 +56,17 @@ public class UserMapperServiceImpl implements UserMapperService {
 		final User current = userDao.findUserByUsername(username);
 		if (current != null) {
 			u.setIdUser(current.getIdUser());
+			if (dto.getUsername() == null) {
+				u.setUsername(current.getUsername());
+			}
+			else {
+				u.setUsername(dto.getUsername());
+			}
+			if (!animals.isEmpty()) {
+				current.getAnimals().removeAll(current.getAnimals());
+			}
 		}
-		u.setUsername(dto.getUsername());
+		
 		u.setAnimals(animals);
 		return u;
 	}

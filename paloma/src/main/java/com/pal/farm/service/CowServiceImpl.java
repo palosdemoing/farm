@@ -21,9 +21,6 @@ import lombok.extern.slf4j.*;
 @Slf4j
 @Service
 public class CowServiceImpl implements CowService {
-
-	@Autowired
-	private ProductionService productionService;
 	
 	@Autowired
 	private CowDAO cowDao;
@@ -36,7 +33,7 @@ public class CowServiceImpl implements CowService {
 	@Override
 	public void delete(Cow c) throws InvalidRequestException {
 //		cowDao.delete(c); 
-		throw new InvalidRequestException();
+		throw new InvalidRequestException("No se permite eliminar animales");
 	}
 
 	@Override

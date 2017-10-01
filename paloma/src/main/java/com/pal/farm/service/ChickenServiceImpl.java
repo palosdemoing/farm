@@ -33,7 +33,7 @@ public class ChickenServiceImpl implements ChickenService {
 	@Override
 	public void delete(Chicken c) throws InvalidRequestException {
 		// chickenDao.delete(c);
-		throw new InvalidRequestException();
+		throw new InvalidRequestException("No se permite eliminar animales");
 	}
 
 	@Override

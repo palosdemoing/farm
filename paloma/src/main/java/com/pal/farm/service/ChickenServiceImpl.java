@@ -13,12 +13,9 @@ import org.springframework.stereotype.Service;
 import com.pal.farm.dao.ChickenDAO;
 import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
-import com.pal.farm.mapper.ProductionMapperServiceImpl;
 import com.pal.farm.model.Chicken;
-import com.pal.farm.model.Production;
-import lombok.extern.slf4j.*;
 
-@Slf4j
+
 @Service
 public class ChickenServiceImpl implements ChickenService {
 

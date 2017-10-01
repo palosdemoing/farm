@@ -15,9 +15,7 @@ import com.pal.farm.dto.AnimalProfitsDTO;
 import com.pal.farm.dto.UserProfitsDTO;
 import com.pal.farm.service.StatsService;
 
-import lombok.extern.slf4j.*;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/stats")
 public class StatsControllerImpl {
@@ -28,7 +26,6 @@ public class StatsControllerImpl {
 	
 	@RequestMapping(value = "/production/topanimals/{n}", method = RequestMethod.GET)
 	public List<AnimalProfitsDTO> profitsByAnimal(@RequestParam(name = "n", required = false, defaultValue="5") Integer n){
-		log.info("entra    ");
 		return statsService.profitsByAnimal(n);
 	}
 	

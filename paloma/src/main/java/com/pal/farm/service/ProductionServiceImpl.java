@@ -1,6 +1,7 @@
 package com.pal.farm.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.omg.CosNaming.NamingContextPackage.CannotProceed;
@@ -14,9 +15,7 @@ import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.model.Production;
 
-import lombok.extern.slf4j.*;
 
-@Slf4j
 @Service
 public class ProductionServiceImpl implements ProductionService {
 	
@@ -92,13 +91,18 @@ public class ProductionServiceImpl implements ProductionService {
 	@Override
 	public Integer checkProductions(List<Production> productions) {
 		Integer count = productions.size();
-		log.info("en check prods " + count);
 		for (Production p : productions) {
 			if (p.getAnimal() == null) {
 				count--;
 			}
 		}
 		return count;
+	}
+
+
+	@Override
+	public List<Production> productionsByAnimalAndRange(Integer id, Date startDate, Date endsDate) {
+		return productionDao.productionsByAnimalAndRange(id, startDate, endsDate);
 	}
 
 }

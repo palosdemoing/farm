@@ -24,9 +24,7 @@ import com.pal.farm.mapper.ProductionMapperService;
 import com.pal.farm.model.Cow;
 import com.pal.farm.service.CowService;
 
-import lombok.extern.slf4j.*;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/cow")
 public class CowControllerImpl implements CowController { 

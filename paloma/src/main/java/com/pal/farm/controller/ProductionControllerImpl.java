@@ -19,13 +19,10 @@ import com.pal.farm.dto.ProductionDTO;
 import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.mapper.ProductionMapperService;
-import com.pal.farm.mapper.ProductionMapperServiceImpl;
 import com.pal.farm.model.Production;
 import com.pal.farm.service.ProductionService;
 
-import lombok.extern.slf4j.*;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/production")
 public class ProductionControllerImpl implements ProductionController {

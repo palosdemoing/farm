@@ -24,9 +24,7 @@ import com.pal.farm.mapper.ProductionMapperService;
 import com.pal.farm.model.Chicken;
 import com.pal.farm.service.ChickenService;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping(value = "/chicken")
 public class ChickenControllerImpl implements ChickenController { 
@@ -44,7 +42,6 @@ public class ChickenControllerImpl implements ChickenController {
 	@RequestMapping(method = RequestMethod.POST)
 	public ChickenDTO create(@RequestBody ChickenDTO t) throws NotFound, AssociationNotPermittedException {
 		Chicken c = chickenMapper.toModel(t, null);
-		log.info("creando: " + c);
 		c = chickenService.create(c);
 		return chickenMapper.toDTO(c);
 	}
@@ -62,7 +59,6 @@ public class ChickenControllerImpl implements ChickenController {
 	public void update(@RequestBody ChickenDTO t, @PathVariable("id") Integer id) throws NotFound, AssociationNotPermittedException {
 		final Chicken c = chickenMapper.toModel(t, id);
 		c.setIdAnimal(id);
-		log.info("actualizando: " + c);
 		chickenService.update(c);
 	}
 
@@ -74,7 +70,6 @@ public class ChickenControllerImpl implements ChickenController {
 		
 		final List<ChickenDTO> chickens = new ArrayList<>();
 		chickenService.getAll( new PageRequest(page - 1, size) ).forEach(c -> chickens.add(chickenMapper.toDTO(c)) );
-		log.info("listando: " + chickens);
 		return chickens;
 		
 	}
@@ -84,7 +79,6 @@ public class ChickenControllerImpl implements ChickenController {
 	public ChickenDTO findById(@PathVariable("id") Integer id) throws NotFound {
 		
 		final Chicken c = chickenService.findById(id);
-		log.info("buscando: " + c);
 		if (c == null) {
 			throw new NotFound();
 		}

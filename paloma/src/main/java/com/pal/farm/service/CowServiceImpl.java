@@ -15,10 +15,7 @@ import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.model.Cow;
 
-import lombok.extern.slf4j.*;
 
-
-@Slf4j
 @Service
 public class CowServiceImpl implements CowService {
 	

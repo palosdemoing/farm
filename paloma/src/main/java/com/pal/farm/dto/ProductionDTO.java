@@ -2,7 +2,6 @@ package com.pal.farm.dto;
 
 
 import java.io.Serializable;
-
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;

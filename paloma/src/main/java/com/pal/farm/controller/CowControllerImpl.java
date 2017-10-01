@@ -23,8 +23,11 @@ import com.pal.farm.mapper.CowMapperService;
 import com.pal.farm.mapper.ProductionMapperService;
 import com.pal.farm.model.Cow;
 import com.pal.farm.service.CowService;
+import com.pal.farm.service.CowServiceImpl;
 
+import lombok.extern.slf4j.*;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/cow")
 public class CowControllerImpl implements CowController { 
@@ -42,13 +45,15 @@ public class CowControllerImpl implements CowController {
 	@RequestMapping(method = RequestMethod.POST)
 	public CowDTO create(@RequestBody CowDTO t) throws NotFound, AssociationNotPermittedException {
 		Cow c = cowMapper.toModel(t, null);
+		log.info("to model hecho " + c);
 		c = cowService.create(c);
+		log.info("creado " + c);
 		return cowMapper.toDTO(c);
 	}
 
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody CowDTO t, @PathVariable("id") Integer id) throws NotFound, InvalidRequestException {
+	public void delete(@RequestBody CowDTO t, @PathVariable("id") Integer id) throws NotFound, AssociationNotPermittedException, InvalidRequestException {
 		final Cow c = cowMapper.toModel(t, id);
 		cowService.delete(c);
 	}

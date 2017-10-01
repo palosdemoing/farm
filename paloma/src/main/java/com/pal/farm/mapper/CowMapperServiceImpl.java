@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.pal.farm.dao.ProductionDAO;
 import com.pal.farm.dto.CowDTO;
+import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.model.Cow;
 import com.pal.farm.model.Production;
 
@@ -36,7 +37,7 @@ public class CowMapperServiceImpl implements CowMapperService {
 	}
 
 	@Override
-	public Cow toModel(CowDTO dto, Integer id) throws NotFound {
+	public Cow toModel(CowDTO dto, Integer id) throws NotFound, AssociationNotPermittedException {
 		final Cow c = new Cow();
 		c.setIdAnimal(id);
 		c.setType(dto.getType());
@@ -49,6 +50,9 @@ public class CowMapperServiceImpl implements CowMapperService {
 				final Production p = productionDao.findOne(i);
 				if (p == null) {
 					throw new NotFound();
+				} 
+				else if (p.getAnimal() != null) {
+					throw new AssociationNotPermittedException("Alguna producción ya ha sido asignada");
 				}
 				productions.add(p);
 			}

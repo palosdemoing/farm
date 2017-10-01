@@ -32,17 +32,14 @@ public class CowServiceImpl implements CowService {
 	public Cow create(Cow c) throws NotFound, AssociationNotPermittedException {
 		List<Production> productions = c.getProductions();
 		
-		log.info("create sin prods " + c);
-		if (!productions.isEmpty()) {
-//			log.info("create prods " + productions);
-			if (productionService.checkProductions(productions) > 0 ){
-				throw new AssociationNotPermittedException("Alguna producción ya ha sido asignada");
+		if (!c.getProductions().isEmpty()) {
+			if (productionService.checkProductions(c.getProductions()) > 0 ){
 			}
-			cowDao.save(c);
 //			productions.forEach(p -> {
 //				p.setAnimal(c);
 //			});	
 //			log.info("create con prods " + c);
+			cowDao.save(c);
 		}
 		else {
 			cowDao.save(c);

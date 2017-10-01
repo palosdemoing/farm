@@ -62,11 +62,11 @@ public class CowControllerImpl implements CowController {
 
 	@Override
 	@RequestMapping(method=RequestMethod.GET)
-	public List<CowDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="0") Integer page,
+	public List<CowDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="1") Integer page,
 								   @RequestParam(name = "size", required = false, defaultValue="10") Integer size) throws CannotProceed {
 		
 		final List<CowDTO> cows = new ArrayList<>();
-		cowService.getAll( new PageRequest(page + 1, size) ).forEach(c -> cows.add(cowMapper.toDTO(c)) );
+		cowService.getAll( new PageRequest(page - 1, size) ).forEach(c -> cows.add(cowMapper.toDTO(c)) );
 		return cows;
 		
 	}

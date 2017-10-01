@@ -23,7 +23,7 @@ import lombok.extern.slf4j.*;
 public class CowServiceImpl implements CowService {
 
 	@Autowired
-	private AnimalService animalService;
+	private ProductionService productionService;
 	
 	@Autowired
 	private CowDAO cowDao;
@@ -31,14 +31,33 @@ public class CowServiceImpl implements CowService {
 	@Override
 	public Cow create(Cow c) throws NotFound, AssociationNotPermittedException {
 		List<Production> productions = c.getProductions();
-		c.setProductions(new ArrayList<>());
-		if (productions != null && !productions.isEmpty()) {
-			log.info("create sin prods " + c);
+		
+		log.info("create sin prods " + c);
+		if (!productions.isEmpty()) {
+//			log.info("create prods " + productions);
+			if (productionService.checkProductions(productions) > 0 ){
+				throw new AssociationNotPermittedException("Alguna producción ya ha sido asignada");
+			}
 			cowDao.save(c);
-			log.info("create prods " + productions);
-			animalService.setProductions(c, productions);
+			productions.forEach(p -> {
+//			
+//				p.setAnimal(c);
+	//			try {
+	//				productionService.update(p);
+	//			} catch (Exception e) {
+	//				e.printStackTrace();
+	//			}
+//				c.getProductions().add(p);
+	//			
+			});	
+//			log.info("create con prods " + c);
 		}
-		return cowDao.save(c);
+		else {
+			cowDao.save(c);
+		}
+		return c;
+
+		
 	}
 
 	@Override
@@ -58,7 +77,7 @@ public class CowServiceImpl implements CowService {
 		}
 		List<Production> productions = c.getProductions();
 		if (productions != null && !productions.isEmpty()) {
-			animalService.setProductions(current, productions);
+//			animalService.setProductions(current, productions);
 		}
 		cowDao.save(current);
 	}

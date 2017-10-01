@@ -47,7 +47,7 @@ public class ProductionControllerImpl implements ProductionController {
 	
 	@Override
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public void delete(@RequestBody ProductionDTO t, @PathVariable("id") Integer id) throws InvalidRequestException {
+	public void delete(@RequestBody ProductionDTO t, @PathVariable("id") Integer id) throws NotFound, InvalidRequestException {
 		final Production p = productionMapper.toModel(t, id);
 		productionService.delete(p);
 	}

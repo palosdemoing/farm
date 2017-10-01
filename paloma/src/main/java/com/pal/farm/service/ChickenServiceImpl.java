@@ -13,9 +13,12 @@ import org.springframework.stereotype.Service;
 import com.pal.farm.dao.ChickenDAO;
 import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
+import com.pal.farm.mapper.ProductionMapperServiceImpl;
 import com.pal.farm.model.Chicken;
 import com.pal.farm.model.Production;
+import lombok.extern.slf4j.*;
 
+@Slf4j
 @Service
 public class ChickenServiceImpl implements ChickenService {
 
@@ -29,10 +32,8 @@ public class ChickenServiceImpl implements ChickenService {
 	public Chicken create(Chicken c) throws NotFound, AssociationNotPermittedException {
 		List<Production> productions = c.getProductions();
 		c.setProductions(new ArrayList<>());
-		chickenDao.save(c);
-		
 		if ( productions != null && !productions.isEmpty()) {
-			animalService.setProductions(c, productions);
+//			animalService.setProductions(c, productions);
 		}
 		return chickenDao.save(c);
 	}
@@ -54,7 +55,7 @@ public class ChickenServiceImpl implements ChickenService {
 		}
 		List<Production> productions = c.getProductions();
 		if (productions != null && !productions.isEmpty()) {
-			animalService.setProductions(current, productions);
+//			animalService.setProductions(current, productions);
 		}
 		chickenDao.save(current);
 	}

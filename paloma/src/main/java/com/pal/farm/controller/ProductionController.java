@@ -15,7 +15,7 @@ public interface ProductionController { // extends CRUD<ProductionDTO, Integer>{
 
 	ProductionDTO create(ProductionDTO t) throws NotFound, AssociationNotPermittedException;
 
-	void delete(ProductionDTO t, Integer id) throws InvalidRequestException;
+	void delete(ProductionDTO t, Integer id) throws NotFound, InvalidRequestException;
 
 	void update(ProductionDTO t, Integer id) throws NotFound, AssociationNotPermittedException;
 

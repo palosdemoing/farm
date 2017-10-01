@@ -14,7 +14,9 @@ import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.model.Production;
 
+import lombok.extern.slf4j.*;
 
+@Slf4j
 @Service
 public class ProductionServiceImpl implements ProductionService {
 	
@@ -58,9 +60,9 @@ public class ProductionServiceImpl implements ProductionService {
 			current.setOfferPrice(p.getOfferPrice());
 		}
 		
-		if ( p.getAnimal() != null ) {
-			current.setAnimal(p.getAnimal());
-		}
+//		if ( p.getAnimal() != null ) {
+//			current.setAnimal(p.getAnimal());
+//		}
 
 		productionDao.save(current);
 	}
@@ -85,6 +87,18 @@ public class ProductionServiceImpl implements ProductionService {
 	@Override
 	public List<Production> productionsByAnimal(Integer idAnimal) {
 		return productionDao.findAllByAnimal(idAnimal);
+	}
+	
+	@Override
+	public Integer checkProductions(List<Production> productions) {
+		Integer count = productions.size();
+		log.info("en check prods " + count);
+		for (Production p : productions) {
+//			if (p.getAnimal() == null) {
+//				count--;
+//			}
+		}
+		return count;
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.pal.farm.model;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.io.Serializable;
 
@@ -16,11 +15,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.dozer.Mapping;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,7 +48,8 @@ public abstract class Animal implements Serializable {
 	@ManyToOne
 	private User user;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "id_animal")
 	private List<Production> productions;
 
 }

@@ -14,8 +14,6 @@ public interface AnimalService { // extends CRUDService<Chicken, Integer> {
 	
 	public List<Animal> findByUser(String username);
 
-	public void setProductions(Animal a, List<Production> productions) throws NotFound, AssociationNotPermittedException;
-
 	public void update(Animal a);
 
 	Animal findById(Integer id);

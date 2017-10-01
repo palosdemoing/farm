@@ -10,9 +10,7 @@ import com.pal.farm.dao.ProductionDAO;
 import com.pal.farm.dto.ProductionDTO;
 import com.pal.farm.model.Production;
 
-import lombok.extern.slf4j.*;
 
-@Slf4j
 @Service
 public class ProductionMapperServiceImpl implements ProductionMapperService {
 
@@ -40,9 +38,9 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 		
 		if (id != null) {
 			Production current = productionDao.findOne(id);
-			if ( current != null ) {
-				p.setAnimal(current.getAnimal());
-			}
+//			if ( current != null ) {
+//				p.setAnimal(current.getAnimal());
+//			}
 		}
 		
 		p.setIdProduction(id);

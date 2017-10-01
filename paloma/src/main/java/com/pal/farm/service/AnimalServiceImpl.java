@@ -32,37 +32,26 @@ public class AnimalServiceImpl implements AnimalService {
 	}
 	
 
-	private Integer checkProductions(List<Production> productions) {
-		Integer count = productions.size();
-		log.info("checkProductions count " + count);
 
-		for (Production p : productions) {
-			log.info("productions animal " + p.getAnimal());
-			if (p.getAnimal() == null) {
-				count--;
-			}
-		}
-		log.info("fin checkProductions count " + count);
-		return count;
-	}
-
-	@Override
-	public void setProductions(Animal a, List<Production> productions) throws NotFound, AssociationNotPermittedException {
-		if (checkProductions(productions) > 0 ){
-			throw new AssociationNotPermittedException("Alguna producción ya ha sido asignada");
-		}
-		productions.forEach(p -> {
-//			
+//	@Override
+//	public void setProductions(Animal a, List<Production> productions) throws NotFound, AssociationNotPermittedException {
+//		if (checkProductions(productions) > 0 ){
+//			throw new AssociationNotPermittedException("Alguna producción ya ha sido asignada");
+//		}
+//		log.info("que no hay animal para el production");
+//		animalDao.save(a);
+//		productions.forEach(p -> {
+////			
 //			p.setAnimal(a);
-//			try {
-//				productionService.update(p);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//			}
-			a.getProductions().add(p);
-//			
-		});		
-	}
+////			try {
+////				productionService.update(p);
+////			} catch (Exception e) {
+////				e.printStackTrace();
+////			}
+//			a.getProductions().add(p);
+////			
+//		});		
+//	}
 
 	
 	@Override

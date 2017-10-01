@@ -4,6 +4,7 @@ package com.pal.farm.mapper;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,18 +25,18 @@ public class CowMapperServiceImpl implements CowMapperService {
 	@Override
 	public CowDTO toDTO(Cow c) {
 		final CowDTO dto = new CowDTO();
-		
+		dto.setType(c.getType());
+		dto.setFrecuency(c.getFrecuency());
 
 		final List<Integer> productions = new ArrayList<Integer>();
 		c.getProductions().forEach(p -> productions.add(p.getIdProduction()));
-
 		dto.setProductions(productions);
 
 		return dto;
 	}
 
 	@Override
-	public Cow toModel(CowDTO dto, Integer id) {
+	public Cow toModel(CowDTO dto, Integer id) throws NotFound {
 		final Cow c = new Cow();
 		c.setIdAnimal(id);
 		c.setType(dto.getType());
@@ -44,12 +45,13 @@ public class CowMapperServiceImpl implements CowMapperService {
 		final List<Production> productions = new ArrayList<Production>();
 		final List<Integer> ids = dto.getProductions();
 		if (ids != null && !ids.isEmpty()) {
-			ids.forEach(i -> {
+			for(Integer i : ids) {
 				final Production p = productionDao.findOne(i);
-				if (p != null) {
-					productions.add(p);
+				if (p == null) {
+					throw new NotFound();
 				}
-			});
+				productions.add(p);
+			}
 		}
 		c.setProductions(productions);
 		

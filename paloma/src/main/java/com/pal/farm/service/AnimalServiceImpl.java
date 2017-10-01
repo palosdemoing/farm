@@ -1,57 +1,52 @@
 package com.pal.farm.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pal.farm.dao.AnimalDAO;
 import com.pal.farm.exception.AssociationNotPermittedException;
+import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.model.Animal;
-import com.pal.farm.model.Production;
 
-import lombok.extern.slf4j.*;
 
-@Slf4j
 @Service
 public class AnimalServiceImpl implements AnimalService {
 	
 	@Autowired
 	@Qualifier("AnimalDAO")
 	private AnimalDAO animalDao;
-	
-	@Autowired
-	private ProductionService productionService;
+
 
 	@Override
-	public List<Animal> findByUser(String username) {
-		return animalDao.findByUser(username);		
+	public List<Animal> findByUser(Integer user) {
+		return animalDao.findByUser(user);		
 	}
 	
 
+	@Override
+	public List<Integer> getAllIds() {
+		List<Integer> ids = new ArrayList<>();
+		Iterable<Animal> list = animalDao.findAll();
+		list.forEach(a -> ids.add(a.getIdAnimal()));
+		return ids;
+	}
+	
 
-//	@Override
-//	public void setProductions(Animal a, List<Production> productions) throws NotFound, AssociationNotPermittedException {
-//		if (checkProductions(productions) > 0 ){
-//			throw new AssociationNotPermittedException("Alguna producción ya ha sido asignada");
-//		}
-//		log.info("que no hay animal para el production");
-//		animalDao.save(a);
-//		productions.forEach(p -> {
-////			
-//			p.setAnimal(a);
-////			try {
-////				productionService.update(p);
-////			} catch (Exception e) {
-////				e.printStackTrace();
-////			}
-//			a.getProductions().add(p);
-////			
-//		});		
-//	}
+	@Override
+	public List<Integer> getAllIdsByUserId(Integer user) {
+		List<Integer> ids = new ArrayList<>();
+		Iterable<Animal> list = animalDao.findByUser(user);
+		list.forEach(a -> ids.add(a.getIdAnimal()));
+		return ids;
+	}
 
 	
 	@Override
@@ -63,6 +58,24 @@ public class AnimalServiceImpl implements AnimalService {
 	@Override
 	public Animal findById(Integer id) {
 		return animalDao.findOne(id);
+	}
+
+
+	@Override
+	public Animal create(Animal t) throws NotFound, AssociationNotPermittedException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(Animal t) throws InvalidRequestException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Animal> getAll(Pageable pageable) throws CannotProceed {
+		return null;
 	}
 	
 }

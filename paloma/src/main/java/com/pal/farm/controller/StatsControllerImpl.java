@@ -15,6 +15,9 @@ import com.pal.farm.dto.AnimalProfitsDTO;
 import com.pal.farm.dto.UserProfitsDTO;
 import com.pal.farm.service.StatsService;
 
+import lombok.extern.slf4j.*;
+
+@Slf4j
 @RestController
 @RequestMapping(value = "/stats")
 public class StatsControllerImpl {
@@ -23,13 +26,16 @@ public class StatsControllerImpl {
 	private StatsService statsService;
 	
 	
-	@RequestMapping(value = "/profits/topAnimals/{n}", method = RequestMethod.GET)
+	@RequestMapping(value = "/production/topanimals/{n}", method = RequestMethod.GET)
 	public List<AnimalProfitsDTO> profitsByAnimal(@RequestParam(name = "n", required = false, defaultValue="5") Integer n){
-		return statsService.profitsByAnimal(); // n);
+		log.info("entra    ");
+		return statsService.profitsByAnimal(n);
 	}
 	
-//	@RequestMapping(value = "/profits/{name}", method = RequestMethod.GET)
-//	public List<UserProfitsDTO> profitsByUser(@PathVariable("name") String name, @RequestParam("from") Date startDate, @RequestParam("to") Date endsDate) throws NotFound {
-//		return statsService.profitsByUser(name, startDate, endsDate);
-//	}
+	@RequestMapping(value = "/profits/{name}", method = RequestMethod.GET)
+	public UserProfitsDTO profitsByUser(@PathVariable("name") String name, 
+										@RequestParam(name = "from", required = false, defaultValue="01/01/1900") Date startDate, 
+										@RequestParam(name = "to", required = false, defaultValue="31/12/2200") Date endsDate) throws NotFound {
+		return statsService.profitsByUser(name, startDate, endsDate);
+	}
 }

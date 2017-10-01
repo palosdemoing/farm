@@ -3,13 +3,15 @@ package com.pal.farm.service;
 import java.util.Date;
 import java.util.List;
 
+import org.omg.CosNaming.NamingContextPackage.NotFound;
+
 import com.pal.farm.dto.AnimalProfitsDTO;
 import com.pal.farm.dto.UserProfitsDTO;
 
 public interface StatsService {
 
-	List<AnimalProfitsDTO> profitsByAnimal(); // Integer n);
+	UserProfitsDTO profitsByUser(String name, Date startDate, Date endsDate) throws NotFound;
 
-//	List<UserProfitsDTO> profitsByUser(String name, Date startDate, Date endsDate);
+	List<AnimalProfitsDTO> profitsByAnimal(Integer n);
 
 }

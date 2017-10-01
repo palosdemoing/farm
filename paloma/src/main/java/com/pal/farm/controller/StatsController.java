@@ -1,6 +1,7 @@
 package com.pal.farm.controller;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.omg.CosNaming.NamingContextPackage.NotFound;
@@ -13,6 +14,6 @@ public interface StatsController {
 
 	List<AnimalProfitsDTO> profitsByAnimal(Integer n);
 	
-	List<UserProfitsDTO> profitsByUser(String name) throws NotFound;
+	List<UserProfitsDTO> profitsByUser(String name, Date startDate, Date endsDate) throws NotFound;
 
 }

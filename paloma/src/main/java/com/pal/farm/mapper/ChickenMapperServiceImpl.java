@@ -42,7 +42,6 @@ public class ChickenMapperServiceImpl implements ChickenMapperService {
 	@Override
 	public Chicken toModel(ChickenDTO dto, Integer id) throws NotFound, AssociationNotPermittedException {
 		final Chicken c = new Chicken();
-		final Chicken current = (Chicken) chickenDao.findOne(id);
 
 		final List<Production> productions = new ArrayList<Production>();
 		if (dto.getProductions() != null && !dto.getProductions().isEmpty()) {
@@ -56,25 +55,25 @@ public class ChickenMapperServiceImpl implements ChickenMapperService {
 				productions.add(p);
 			}
 		}
-		if (current != null) {
-			c.setIdAnimal(id);
-			if (dto.getType() == null) {
-				c.setType(current.getType());
-			}
-			else {
-				c.setType(dto.getType());
-			}
-			if (dto.getFrecuency() == null) {
-				c.setFrecuency(current.getFrecuency());
-			}
-			else {
-				c.setFrecuency(dto.getFrecuency());
-			}
-			if (!productions.isEmpty()) {
-				current.getProductions().removeAll(current.getProductions());
-			}
-			c.setProductions(productions);
-		}	
+		if (id != null) {
+			final Chicken current = (Chicken) chickenDao.findOne(id);
+			if (current != null) {
+				if (dto.getType() != null) {
+					current.setType(dto.getType());
+				}
+				if (dto.getFrecuency() != null) {
+					current.setFrecuency(dto.getFrecuency());
+				}
+				if (!productions.isEmpty()) {
+					current.getProductions().removeAll(current.getProductions());
+					current.setProductions(productions);
+				}
+				return current;
+			}	
+		}
+		c.setType(dto.getType());
+		c.setFrecuency(dto.getFrecuency());
+		c.setProductions(productions);
 		return c;
 	}
 }

@@ -14,7 +14,6 @@ import com.pal.farm.dao.UserDAO;
 import com.pal.farm.dto.UserDTO;
 import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.model.Animal;
-import com.pal.farm.model.Production;
 import com.pal.farm.model.User;
 
 
@@ -39,35 +38,35 @@ public class UserMapperServiceImpl implements UserMapperService {
 	public User toModel(UserDTO dto, String username) throws NotFound, AssociationNotPermittedException {
 		final List<Animal> animals = new ArrayList<>();
 		if (dto.getAnimals() != null && !dto.getAnimals().isEmpty()) {
-			if (dto.getAnimals() != null && !dto.getAnimals().isEmpty()) {
-				for(Integer id : dto.getAnimals()) {
-					final Animal a = animalDao.findOne(id);
-					if (a == null) {
-						throw new NotFound();
-					} 
-					else if (a.getUser() != null) {
-						throw new AssociationNotPermittedException("Algún animal ya ha sido asignado");
-					}
-					animals.add(a);
+			for(Integer id : dto.getAnimals()) {
+				final Animal a = animalDao.findOne(id);
+				if (a == null) {
+					throw new NotFound();
+				} 
+				else if (a.getUser() != null) {
+					throw new AssociationNotPermittedException("Algún animal ya ha sido asignado");
 				}
+				animals.add(a);
 			}
 		}
 		final User u = new User();
-		final User current = userDao.findUserByUsername(username);
-		if (current != null) {
-			u.setIdUser(current.getIdUser());
-			if (dto.getUsername() == null) {
-				u.setUsername(current.getUsername());
+		if (username != null) {
+			final User current = userDao.findUserByUsername(username);
+			if (current != null) {
+				if (dto.getUsername() != null) {
+					current.setUsername(dto.getUsername());
+				}
+				if (!animals.isEmpty()) {
+					current.getAnimals().removeAll(current.getAnimals());
+					current.setAnimals(animals);
+				}
+				return current;
 			}
-			else {
-				u.setUsername(dto.getUsername());
-			}
-			if (!animals.isEmpty()) {
-				current.getAnimals().removeAll(current.getAnimals());
-			}
+		} 
+		else {
+			u.setUsername(dto.getUsername());
+			u.setAnimals(animals);
 		}
-		
-		u.setAnimals(animals);
 		return u;
 	}
 

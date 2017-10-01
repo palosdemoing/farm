@@ -14,7 +14,6 @@ import com.pal.farm.dto.CowDTO;
 import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.model.Cow;
 import com.pal.farm.model.Production;
-import com.pal.farm.model.User;
 
 
 //crear abstrac class para los herederos de Animal
@@ -44,7 +43,6 @@ public class CowMapperServiceImpl implements CowMapperService {
 	@Override
 	public Cow toModel(CowDTO dto, Integer id) throws NotFound, AssociationNotPermittedException {
 		final Cow c = new Cow();
-		final Cow current = (Cow) cowDao.findOne(id);
 
 		final List<Production> productions = new ArrayList<Production>();
 		if (dto.getProductions() != null && !dto.getProductions().isEmpty()) {
@@ -59,25 +57,25 @@ public class CowMapperServiceImpl implements CowMapperService {
 				productions.add(p);
 			}
 		}
-		if (current != null) {
-			c.setIdAnimal(id);
-			if (dto.getType() == null) {
-				c.setType(current.getType());
-			}
-			else {
-				c.setType(dto.getType());
-			}
-			if (dto.getFrecuency() == null) {
-				c.setFrecuency(current.getFrecuency());
-			}
-			else {
-				c.setFrecuency(dto.getFrecuency());
-			}
-			if (!productions.isEmpty()) {
-				current.getProductions().removeAll(current.getProductions());
-			}
-			c.setProductions(productions);
-		}	
+		if (id != null) {
+			final Cow current = (Cow) cowDao.findOne(id);
+			if (current != null) {
+				if (dto.getType() != null) {
+					current.setType(dto.getType());
+				}
+				if (dto.getFrecuency() != null) {
+					current.setFrecuency(dto.getFrecuency());
+				}
+				if (!productions.isEmpty()) {
+					current.getProductions().removeAll(current.getProductions());
+					current.setProductions(productions);
+				}
+				return current;
+			}	
+		}
+		c.setType(dto.getType());
+		c.setFrecuency(dto.getFrecuency());
+		c.setProductions(productions);
 		return c;
 	}
 }

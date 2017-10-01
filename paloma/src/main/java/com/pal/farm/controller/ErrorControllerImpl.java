@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.pal.farm.dto.MessageDTO;
 
-import javax.validation.ConstraintViolationException;                 //interpolatedMessage='no puede ser null', propertyPath=username
+import javax.validation.ConstraintViolationException; 
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -25,6 +25,14 @@ public class ErrorControllerImpl implements ErrorController {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public MessageDTO errorGetArgs(Exception e) {
 		return new MessageDTO(e.getMessage());
+	}
+	
+	@Override
+	@ResponseBody
+	@ExceptionHandler(ConstraintViolationException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public MessageDTO errorContraintViolation(Exception e) {
+		return new MessageDTO("Ha introducido valores erroneos o nulos");
 	}
 	
 	@Override

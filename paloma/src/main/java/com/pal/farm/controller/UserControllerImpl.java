@@ -67,8 +67,7 @@ public class UserControllerImpl implements UserController {
 		if (userService.findByUsername(username) == null) {
 			throw new NotFound();
 		}
-		final User u = userMapper.toModel(t, username);
-		userService.update(u);
+		userService.update( userMapper.toModel(t, username) );
 	}
 
 	@Override

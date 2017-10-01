@@ -12,4 +12,6 @@ public interface ErrorController {
 
 	MessageDTO errorAssociation(Exception e);
 
+	MessageDTO errorContraintViolation(Exception e);
+
 }

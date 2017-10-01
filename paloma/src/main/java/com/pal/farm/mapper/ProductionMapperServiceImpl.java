@@ -8,10 +8,11 @@ import org.springframework.stereotype.Service;
 import com.pal.farm.dao.AnimalDAO;
 import com.pal.farm.dao.ProductionDAO;
 import com.pal.farm.dto.ProductionDTO;
-import com.pal.farm.model.Animal;
 import com.pal.farm.model.Production;
 
+import lombok.extern.slf4j.*;
 
+@Slf4j
 @Service
 public class ProductionMapperServiceImpl implements ProductionMapperService {
 
@@ -30,7 +31,6 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 		dto.setState(p.getState());
 		dto.setOfferPrice(p.getOfferPrice());
 		dto.setCostPrice(p.getCostPrice());
-		dto.setAnimal(p.getAnimal().getIdAnimal());
 		return dto; 
 	}
 
@@ -38,12 +38,11 @@ public class ProductionMapperServiceImpl implements ProductionMapperService {
 	public Production toModel(ProductionDTO dto, Integer id) {
 		final Production p = new Production();
 		
-		Animal a = null;
-		if (dto.getAnimal() != null) {
-			a = animalDao.findOne(dto.getAnimal());
-		}
-		if (a != null) {
-			p.setAnimal(a);
+		if (id != null) {
+			Production current = productionDao.findOne(id);
+			if ( current != null ) {
+				p.setAnimal(current.getAnimal());
+			}
 		}
 		
 		p.setIdProduction(id);

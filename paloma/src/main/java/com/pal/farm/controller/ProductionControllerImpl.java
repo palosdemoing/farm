@@ -19,10 +19,13 @@ import com.pal.farm.dto.ProductionDTO;
 import com.pal.farm.exception.AssociationNotPermittedException;
 import com.pal.farm.exception.InvalidRequestException;
 import com.pal.farm.mapper.ProductionMapperService;
+import com.pal.farm.mapper.ProductionMapperServiceImpl;
 import com.pal.farm.model.Production;
 import com.pal.farm.service.ProductionService;
 
+import lombok.extern.slf4j.*;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/production")
 public class ProductionControllerImpl implements ProductionController {
@@ -58,11 +61,11 @@ public class ProductionControllerImpl implements ProductionController {
 
 	@Override
 	@RequestMapping(method=RequestMethod.GET)
-	public List<ProductionDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="0") Integer page,
+	public List<ProductionDTO> getAll(@RequestParam(name = "page", required = false, defaultValue="1") Integer page,
 								      @RequestParam(name = "size", required = false, defaultValue="10") Integer size) throws CannotProceed {
 		
 		final List<ProductionDTO> productions = new ArrayList<>();
-		productionService.getAll( new PageRequest(page + 1, size) ).forEach(p -> productions.add(productionMapper.toDTO(p)) );
+		productionService.getAll( new PageRequest(page - 1, size) ).forEach(p -> productions.add(productionMapper.toDTO(p)) );
 		return productions;
 		
 	}
